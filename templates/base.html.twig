@@ -2,18 +2,72 @@
 <html>
     <head>
         <meta charset="UTF-8">
-        <title>{% block title %}Welcome!{% endblock %}</title>
+        <title>{% block title %}Candotti-Blog{% endblock %}</title>
+        
         {# Run `composer require symfony/webpack-encore-bundle`
            and uncomment the following Encore helpers to start using Symfony UX #}
-        {% block stylesheets %}
-            {#{{ encore_entry_link_tags('app') }}#}
-        {% endblock %}
+        {% block stylesheets %}{#{{ encore_entry_link_tags('app') }}#}{% endblock %}
 
-        {% block javascripts %}
-            {#{{ encore_entry_script_tags('app') }}#}
+        {% block javascripts %}{#{{ encore_entry_script_tags('app') }}#}{% endblock %}
+
+        {% block head_css %}
+            <link rel="stylesheet" href="https://bootswatch.com/4/yeti/bootstrap.min.css">
+            <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.15.2/css/all.min.css" integrity="sha512-HK5fgLBL+xu6dm/Ii3z4xhlSUyZgTT9tuc/hSrtw6uzJOvgRr2a9jyxxT1ely+B+xFAmJKVSTbpM/CuL7qxO8w==" crossorigin="anonymous" />
+        {% endblock %}
+        {% block head_js %}
+            <script src="https://code.jquery.com/jquery-3.4.1.slim.min.js" integrity="sha384-J6qa4849blE2+poT4WnyKhv5vZF5SrPo0iEjwBvKU7imGFAV0wwj1yYfoRSJoZ+n" crossorigin="anonymous"></script>
+            <script src="https://cdn.jsdelivr.net/npm/popper.js@1.16.0/dist/umd/popper.min.js" integrity="sha384-Q6E9RHvbIyZFJoft+2mJbHaEWldlvI9IOYy5n3zV9zzTtmI3UksdQRVvoxMfooAo" crossorigin="anonymous"></script>
+            <script src="https://stackpath.bootstrapcdn.com/bootstrap/4.4.1/js/bootstrap.min.js" integrity="sha384-wfSDF2E50Y2D1uUdj0O3uMBJnjuUD4Ih7YwaYd1iqfktj0Uod8GCExl3Og8ifwB6" crossorigin="anonymous"></script>
         {% endblock %}
     </head>
     <body>
-        {% block body %}{% endblock %}
+    {% include "navbar.html.twig" %}
+    <div class="container mt-4">
+    {% block body %}
+        {% for messages in app.flashes('success') %}
+            <div class="alert alert-dismissible alert-success">
+                <button type="button" class="close" data-dismiss="alert" tabindex="0">&times;</button>
+                {{ messages }}
+            </div>
+        {% endfor %}
+        <h1 class="text-center mb-4">Accueil</h1>
+        {% if app.user %}
+            {# <a href="{{ path('article_new') }}" class="btn btn-success my-2">Créer un article</a> #}
+        {% endif %}
+            {% for article in articles %}
+                <div class="card mb-3">
+                    <div class="card-body">
+                        <h2 class="card-title">{{ article.title }}</h2>
+                        <h6 class="card-subtitle text-muted">{{ article.subTitle }}</h6>
+                    </div>
+                    <svg xmlns="http://www.w3.org/2000/svg" class="d-block user-select-none" width="100%" height="200" aria-label="Placeholder: Image cap" focusable="false" role="img" preserveAspectRatio="xMidYMid slice" viewBox="0 0 318 180" style="font-size:1.125rem;text-anchor:middle">
+                        <rect width="100%" height="100%" fill="#868e96"></rect>
+                        <text x="50%" y="50%" fill="#dee2e6" dy=".3em">Image cap</text>
+                    </svg>
+                    <div class="card-body">
+                        <p class="card-text">{{ article.content|slice(0,20) ~ '...' }}</p>
+                    </div>
+                    <ul class="list-group list-group-flush">
+                        <li class="list-group-item">Comedie</li>
+                    </ul>
+                    <div class="card-body">
+                            <a href="mailto:chose@bidule.fr
+                                ?subject={{ article.title }}
+                                &body=Regarde cette article !" class="card-link" tabindex="0">Partager</a>
+                            <a href="{{ path('article_show', {'id': article.id}) }}" class="card-link" tabindex="0">Voir plus...</a>
+                    </div>
+                    <div class="card-footer text-muted">
+                        Le {{ article.createAt ? article.createAt|date('d-m-Y') : '' }} par {{ article.author.author}}.
+                    </div>
+                </div>
+            {% else %}
+                <h6>Aucun article disponible :(</h6>
+            {% endfor %}
+        <div class="text-center">
+            {{ knp_pagination_render(articles) }}
+        </div>
+    {% endblock %}
+    </div>
+    {% include "footer.html.twig" %}
     </body>
 </html>
