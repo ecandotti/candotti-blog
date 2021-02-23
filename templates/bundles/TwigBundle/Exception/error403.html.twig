@@ -1,0 +1,10 @@
+{# templates/bundles/TwigBundle/Exception/error404.html.twig #}
+{% extends 'base.html.twig' %}
+
+{% block body %}
+    <h1 class="text-center mb-4">Acces impossible</h1>
+
+    <p class=" text-center mb-4">
+        Peut-être que vous ne disponez pas des droits suffisants :( <a href="{{ path('home') }}"><br>Retourner à l'accueil</a>.
+    </p>
+{% endblock %}

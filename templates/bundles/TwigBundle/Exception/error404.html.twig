@@ -1,0 +1,10 @@
+{# templates/bundles/TwigBundle/Exception/error404.html.twig #}
+{% extends 'base.html.twig' %}
+
+{% block body %}
+    <h1 class="text-center mb-4">Page introuvable</h1>
+
+    <p class=" text-center mb-4">
+        La page demandée n'a pas pu être localisée. Vérifier l'orthographe de l'URL ou :<br> <a href="{{ path('home') }}">Retourner à l'accueil</a>.
+    </p>
+{% endblock %}
