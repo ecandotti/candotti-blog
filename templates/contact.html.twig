@@ -3,6 +3,23 @@
 {% block title %}Contact{% endblock %}
 
 {% block body %}
+    {% for messages in app.flashes('success') %}
+        <div class="alert alert-dismissible alert-success">
+            <button type="button" class="close" data-dismiss="alert" tabindex="0">&times;</button>
+            {{ messages }}
+        </div>
+    {% endfor %}
     <a href="{{ path('home') }}" class="go-home"><h3>🏠</h3></a>
     <h1 class="text-center mb-4">Contact</h1>
+
+    {{ form_start(contactForm) }}
+        {{ form_row(contactForm.first_name) }}
+        {{ form_row(contactForm.last_name) }}
+        {{ form_row(contactForm.phone) }}
+        {{ form_row(contactForm.email) }}
+        {{ form_row(contactForm.message) }}
+        <div class="text-center mb-4">
+            <button type="submit" class="btn btn-primary">Envoyer</button>
+        </div>
+    {{ form_end(contactForm) }}
 {% endblock %}
