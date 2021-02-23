@@ -3,7 +3,9 @@
 namespace App\Controller;
 
 use App\Entity\Article;
+use App\Entity\Contact;
 use App\Entity\NewsLetter;
+use App\Form\ContactType;
 use App\Form\NewsLetterType;
 use Knp\Component\Pager\PaginatorInterface;
 use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
@@ -35,10 +37,12 @@ class MainController extends AbstractController
     public function newsletter(Request $request)
     {
         $newsletter = new NewsLetter();
+
         $form = $this->createForm(NewsLetterType::class, $newsletter);
         $form->handleRequest($request);
 
-        if ($form->isSubmitted() && $form->isValid()) {
+        if (!empty($form->get('email')->getData()) && is_string($form->get('email')->getData())) {
+            $newsletter->setEmail($form->get('email')->getData());
             $entityManager = $this->getDoctrine()->getManager();
             $entityManager->persist($newsletter);
             $entityManager->flush();
@@ -47,6 +51,7 @@ class MainController extends AbstractController
             return $this->redirectToRoute('home');
         }
 
+        $this->addFlash('error', 'Erreur lors de l\'inscription à la newsletter.');
         return $this->redirectToRoute('home');
     }
 
@@ -61,8 +66,25 @@ class MainController extends AbstractController
     /**
      * @Route("/contact", name="contact")
      */
-    public function contact(): Response
+    public function contact_post(Request $request)
     {
-        return $this->render('contact.html.twig');
+        $contact = new Contact();
+
+        $form = $this->createForm(ContactType::class, $contact);
+        $form->handleRequest($request);
+
+        if ($form->isSubmitted() && $form->isValid()) {
+            $entityManager = $this->getDoctrine()->getManager();
+            $entityManager->persist($contact);
+            $entityManager->flush();
+
+            $this->addFlash('success', 'Message envoyé avec succès, la réponse se fera dans nos meilleurs délais.');
+            return $this->redirectToRoute('contact');
+        }
+
+        return $this->render('contact.html.twig', [
+            'contact' => $contact,
+            'contactForm' => $form->createView(),
+        ]);
     }
 }
