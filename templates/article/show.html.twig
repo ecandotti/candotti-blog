@@ -20,7 +20,8 @@
 
     <h6 class="text-muted"><strong>Autheur :</strong> {{ article.author.author ? article.author.author : 'empty' }}</h6>
     <h6 class="text-muted"><strong>Date de création :</strong> {{ article.createAt ? article.createAt|date('d-m-Y') : 'empty' }}</h6>
-    <h6 class="text-muted"><strong>Temps de lecture :</strong> {{ article.readTime ? article.readTime : 'none' }}</h6>
+    <h6 class="text-muted"><strong>Temps de lecture :</strong> {{ article.readTime ? article.readTime : 'none' }} minutes</h6>
+    <h6 class="text-muted"><strong>Categorie :</strong> {{ article.category.name }}</h6>
     <hr>
     <img class="img-fluid" src="https://blog.parkinn.com/wp-content/uploads/sites/7/2013/11/astana-city-panoramic-view.jpg"/>
     <div class="my-2" style="overflow-wrap: break-word;">

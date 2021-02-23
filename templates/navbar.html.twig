@@ -22,7 +22,7 @@
           Bonjour, <strong>{{ app.user.author}}</strong>
         </a>
         <div class="dropdown-menu text-center">
-          <a class="dropdown-item" href="#">Mon compte</a>
+          <a class="dropdown-item" href="{{ path('user') }}">Mon compte</a>
         <div class="dropdown-divider"></div>
           <a class="dropdown-item" href="{{ path('logout') }}">Deconnexion</a>
         </div>
