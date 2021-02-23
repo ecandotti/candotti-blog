@@ -30,6 +30,12 @@
                 {{ messages }}
             </div>
         {% endfor %}
+        {% for messages in app.flashes('error') %}
+            <div class="alert alert-dismissible alert-danger">
+                <button type="button" class="close" data-dismiss="alert" tabindex="0">&times;</button>
+                {{ messages }}
+            </div>
+        {% endfor %}
         <h1 class="text-center mb-4">Accueil</h1>
         {% if app.user %}
             {# <a href="{{ path('article_new') }}" class="btn btn-success my-2">Créer un article</a> #}
