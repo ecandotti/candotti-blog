@@ -68,7 +68,9 @@ class ArticleController extends AbstractController
             $this->getDoctrine()->getManager()->flush();
 
             $this->addFlash('success', 'Article édité avec succès');
-            return $this->redirectToRoute('home');
+            return $this->render('article/show.html.twig', [
+                'article' => $article,
+            ]);
         }
 
         return $this->render('article/edit.html.twig', [
