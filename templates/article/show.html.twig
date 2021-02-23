@@ -1,0 +1,23 @@
+{% extends 'base.html.twig' %}
+
+{% block title %}{{ article.title }}{% endblock %}
+
+{% block body %}
+    <a href="{{ path('home') }}"><h3>🏠</h3></a>
+    <h1 class="text-center">{{ article.title }}</h1>
+    <h6 class="text-center mb-4">{{ article.subTitle }}</h6>
+
+    {% if app.user and is_granted('ROLE_ADMIN') %}
+        <a href="{{ path('article_edit', {'id': article.id}) }}" class="btn btn-warning mr-2 mb-2">Editer</a>
+        {{ include('article/_delete_form.html.twig') }}
+    {% endif %}
+
+    <h6 class="text-muted"><strong>Autheur :</strong> {{ article.author.author ? article.author.author : 'empty' }}</h6>
+    <h6 class="text-muted"><strong>Date de création :</strong> {{ article.createAt ? article.createAt|date('d-m-Y') : 'empty' }}</h6>
+    <h6 class="text-muted"><strong>Temps de lecture :</strong> {{ article.readTime ? article.readTime : 'none' }}</h6>
+    <hr>
+    <img class="img-fluid" src="https://blog.parkinn.com/wp-content/uploads/sites/7/2013/11/astana-city-panoramic-view.jpg"/>
+    <div class="my-2" style="overflow-wrap: break-word;">
+        {{ article.content }}
+    </div>
+{% endblock %}

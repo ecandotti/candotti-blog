@@ -1,0 +1,11 @@
+{% extends 'base.html.twig' %}
+
+{% block title %}Créer un article{% endblock %}
+
+{% block body %}
+    <a href="{{ path('home') }}"><h3>🏠</h3></a>
+    <h1 class="text-center mb-2">Créer un article</h1>
+
+    {{ include('article/_form.html.twig') }}
+
+{% endblock %}
