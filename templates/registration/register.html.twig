@@ -1,0 +1,31 @@
+{% extends 'base.html.twig' %}
+
+{% block title %}Nous rejoindre{% endblock %}
+
+{% block body %}
+    {% for flashError in app.flashes('verify_email_error') %}
+        <div class="alert alert-danger" role="alert">{{ flashError }}</div>
+    {% endfor %}
+
+    {% if app.user %}
+        <div class="mb-3">
+            Vous êtes déjà connecté en tant que <b>{{ app.user.username }}</b>, <br>
+            <a href="{{ path('logout') }}" class="btn btn-danger my-2">Se déconnecter</a>
+        </div>
+    {% else %}
+        <h1 class="text-center mb-4">Nous rejoindre</h1>
+
+        {{ form_start(registrationForm) }}
+            {{ form_row(registrationForm.first_name) }}
+            {{ form_row(registrationForm.last_name) }}
+            {{ form_row(registrationForm.phone) }}
+            {{ form_row(registrationForm.author) }}
+            {{ form_row(registrationForm.email) }}
+            {{ form_row(registrationForm.password.first) }}
+            {{ form_row(registrationForm.password.second) }}
+            <div class="text-center mb-4">
+                <button type="submit" class="btn btn-primary">S'enregistrer !</button>
+            </div>
+        {{ form_end(registrationForm) }}
+    {% endif %}
+{% endblock %}
