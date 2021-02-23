@@ -1,0 +1,52 @@
+<!-- Footer -->
+<footer class="bg-dark text-center text-white">
+  <!-- Grid container -->
+  <div class="container p-4">
+    <!-- Section: Social media -->
+    <section class="mb-4">
+      <!-- Instagram -->
+      <a class="btn btn-outline-light btn-floating m-1" href="https://instagram.com" role="button" target="_blank"
+        ><i class="fab fa-instagram"></i
+      ></a>
+
+      <!-- Linkedin -->
+      <a class="btn btn-outline-light btn-floating m-1" href="https://linkedin.com" role="button" target="_blank"
+        ><i class="fab fa-linkedin-in"></i
+      ></a>
+
+      <!-- Github -->
+      <a class="btn btn-outline-light btn-floating m-1" href="https://github.com" role="button" target="_blank"
+        ><i class="fab fa-github"></i
+      ></a>
+    </section>
+
+    <section class="">
+      <form action="{{ path('newsletter') }}" method="POST">
+        <div class="row d-flex justify-content-center">
+          <div class="col-auto">
+            <p class="pt-2">
+              <strong>Rester connecté : </strong>
+            </p>
+          </div>
+
+          <div class="col-md-5 col-12">
+            <div class="form-outline form-white mb-4">
+              <input type="email" id="form5Example2" class="form-control" placeholder="Saisissez votre email"/>
+            </div>
+          </div>
+          
+          <div class="col-auto">
+            <button type="submit" class="btn btn-outline-light mb-4">
+              S'inscrire
+            </button>
+          </div>
+        </div>
+      </form>
+    </section>
+  </div>
+  <div class="text-center p-3" style="background-color: rgba(0, 0, 0, 0.2);">
+    © 2020 Copyright:
+    <a class="text-white" href="https://enzocandotti.fr/" target="_blank">Enzo Candotti</a>
+  </div>
+</footer>
+<!-- Footer -->
