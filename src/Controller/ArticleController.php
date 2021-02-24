@@ -3,7 +3,10 @@
 namespace App\Controller;
 
 use App\Entity\Article;
+use App\Entity\Comment;
+use App\Entity\User;
 use App\Form\ArticleType;
+use App\Form\CommentType;
 use App\Repository\ArticleRepository;
 use App\Repository\UserRepository;
 use DateTime;
@@ -45,12 +48,40 @@ class ArticleController extends AbstractController
     }
 
     /**
-     * @Route("/{id}", name="article_show", methods={"GET"})
+     * @Route("/{id}", name="article_show", methods={"GET", "POST"})
      */
-    public function show(Article $article): Response
+    public function show(Article $article, Request $request)
     {
-        return $this->render('article/show.html.twig', [
+        $comments = $this->getDoctrine()->getRepository(Comment::class)->findBy([
             'article' => $article,
+            'actif' => 1
+        ],['createAt' => 'desc']);
+
+        $comment = new Comment();
+        $form = $this->createForm(CommentType::class, $comment);
+        $form->handleRequest($request);
+
+        if ($form->isSubmitted() && $form->isValid()) {
+            $comment->setArticle($article);
+            $comment->setUser($this->getUser());
+            $comment->setCreateAt(new DateTime('now'));
+
+            $doctrine = $this->getDoctrine()->getManager();
+            $doctrine->persist($comment);
+            $doctrine->flush();
+
+            $this->addFlash('success', 'Commentaire posté avec succès. Cependant le commentaire doit être approuvé par l’administrateur pour être visible');
+            return $this->render('article/show.html.twig', [
+                'form' => $form->createView(),
+                'article' => $article,
+                'comments' => $comments
+            ]);
+        }
+
+        return $this->render('article/show.html.twig', [
+            'form' => $form->createView(),
+            'article' => $article,
+            'comments' => $comments
         ]);
     }
 
