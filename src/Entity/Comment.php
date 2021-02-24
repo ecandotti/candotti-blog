@@ -34,6 +34,16 @@ class Comment
      */
     private $content;
 
+    /**
+     * @ORM\Column(type="boolean")
+     */
+    private $actif = false;
+
+    /**
+     * @ORM\Column(type="datetime")
+     */
+    private $createAt;
+
     public function getId(): ?int
     {
         return $this->id;
@@ -71,6 +81,30 @@ class Comment
     public function setContent(string $content): self
     {
         $this->content = $content;
+
+        return $this;
+    }
+
+    public function getActif(): ?bool
+    {
+        return $this->actif;
+    }
+
+    public function setActif(bool $actif): self
+    {
+        $this->actif = $actif;
+
+        return $this;
+    }
+
+    public function getCreateAt(): ?\DateTimeInterface
+    {
+        return $this->createAt;
+    }
+
+    public function setCreateAt(\DateTimeInterface $createAt): self
+    {
+        $this->createAt = $createAt;
 
         return $this;
     }
