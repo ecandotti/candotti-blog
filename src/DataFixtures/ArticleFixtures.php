@@ -35,6 +35,7 @@ Proin vulputate iaculis lacus, ac tincidunt ex euismod id. Phasellus risus lacus
             ;
 
             $manager->persist($article);
+            $this->addReference('article'.$i, $article);
         }
         $manager->flush();
     }
