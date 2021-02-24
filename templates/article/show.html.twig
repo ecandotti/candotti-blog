@@ -14,8 +14,10 @@
     <h6 class="text-center mb-4">{{ article.subTitle }}</h6>
 
     {% if app.user and is_granted('ROLE_ADMIN') %}
+    <div class="d-flex">
         <a href="{{ path('article_edit', {'id': article.id}) }}" class="btn btn-warning mr-2 mb-2">Editer</a>
         {{ include('article/_delete_form.html.twig') }}
+    </div>
     {% endif %}
 
     <h6 class="text-muted"><strong>Autheur :</strong> {{ article.author.author ? article.author.author : 'empty' }}</h6>
@@ -28,4 +30,7 @@
         {{ article.content }}
     </div>
     <hr>
+    {% include "article/_comment.html.twig" %}
+    <hr>
+    {% include "article/_latest-article.html.twig" %}
 {% endblock %}
