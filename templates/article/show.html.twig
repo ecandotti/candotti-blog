@@ -20,7 +20,7 @@
     </div>
     {% endif %}
 
-    <h6 class="text-muted"><strong>Autheur :</strong> {{ article.author.author ? article.author.author : 'empty' }}</h6>
+    <h6 class="text-muted"><strong>Autheur :</strong> {{ article.user.author ? article.user.author : 'empty' }}</h6>
     <h6 class="text-muted"><strong>Date de création :</strong> {{ article.createAt ? article.createAt|date('d-m-Y') : 'empty' }}</h6>
     <h6 class="text-muted"><strong>Temps de lecture :</strong> {{ article.readTime ? article.readTime : 'none' }} minutes</h6>
     <h6 class="text-muted"><strong>Categorie :</strong> {{ article.category.name }}</h6>
