@@ -63,7 +63,7 @@
                             <a href="{{ path('article_show', {'id': article.id}) }}" class="card-link" tabindex="0">Voir plus...</a>
                     </div>
                     <div class="card-footer text-muted">
-                        Le {{ article.createAt ? article.createAt|date('d-m-Y') : '' }} par {{ article.author.author}}.
+                        Le {{ article.createAt ? article.createAt|date('d-m-Y') : '' }} par {{ article.user.author}}.
                     </div>
                 </div>
             {% else %}
