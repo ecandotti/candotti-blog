@@ -59,12 +59,17 @@ class ArticleController extends AbstractController
             'status' => "V"
         ],['createAt' => 'desc']);
 
+        $latest_article = $this->getDoctrine()->getRepository(Article::class)->findBy([], [
+            'createAt' => 'desc',
+        ],5);
+
         $comment = new Comment();
         $form = $this->createForm(CommentType::class, $comment);
         $form->handleRequest($request);
 
         if ($form->isSubmitted() && $form->isValid()) {
             $comment->setArticle($article);
+            $comment->setStatus('W');
             $comment->setUser($this->getUser());
             $comment->setCreateAt(new DateTime('now'));
 
@@ -76,14 +81,16 @@ class ArticleController extends AbstractController
             return $this->render('article/show.html.twig', [
                 'form' => $form->createView(),
                 'article' => $article,
-                'comments' => $comments
+                'comments' => $comments,
+                'latest_article' => $latest_article
             ]);
         }
 
         return $this->render('article/show.html.twig', [
             'form' => $form->createView(),
             'article' => $article,
-            'comments' => $comments
+            'comments' => $comments,
+            'latest_article' => $latest_article
         ]);
     }
 
@@ -92,8 +99,12 @@ class ArticleController extends AbstractController
      * @Route("/{id}/edit", name="article_edit", methods={"GET","POST"})
      * @IsGranted("ROLE_ADMIN")
      */
-    public function edit(Request $request, Article $article): Response
+    public function edit(Request $request, Article $article, $id): Response
     {
+        $comments = $this->getDoctrine()->getRepository(Comment::class)->findBy([
+            'article' => $article,
+        ],['createAt' => 'desc']);
+
         $form = $this->createForm(ArticleType::class, $article);
         $form->handleRequest($request);
 
@@ -101,12 +112,11 @@ class ArticleController extends AbstractController
             $this->getDoctrine()->getManager()->flush();
 
             $this->addFlash('success', 'Article édité avec succès');
-            return $this->render('article/show.html.twig', [
-                'article' => $article,
-            ]);
+            return $this->redirectToRoute('article_show', [ 'id' => $id ]);
         }
 
         return $this->render('article/edit.html.twig', [
+            'comments' => $comments,
             'article' => $article,
             'form' => $form->createView(),
         ]);
