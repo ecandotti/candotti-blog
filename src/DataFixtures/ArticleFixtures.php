@@ -16,7 +16,7 @@ class ArticleFixtures extends Fixture implements DependentFixtureInterface
             $article = new Article();
             $article
                 ->setCategory($this->getReference('category_'.rand(1,3)))
-                ->setAuthor($this->getReference('simple-user'))
+                ->setUser($this->getReference('simple-user'))
                 ->setTitle('I\'m the title n°'. $i)
                 ->setSubtitle('Hi \'m the subtitle')
                 ->setCreateAt(new DateTime())
