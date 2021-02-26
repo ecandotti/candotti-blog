@@ -20,7 +20,7 @@ class MainController extends AbstractController
      */
     public function home(Request $request, PaginatorInterface $paginator): Response
     {
-        $articles = $this->getDoctrine()->getRepository(Article::class)->findBy([]);
+        $articles = $this->getDoctrine()->getRepository(Article::class)->findBy([],['createAt' => 'asc']);
 
         $articles = $paginator->paginate(
             $articles, // Requête contenant les données à paginer
