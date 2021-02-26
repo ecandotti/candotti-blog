@@ -33,6 +33,8 @@ class ArticleController extends AbstractController
 
         if ($form->isSubmitted() && $form->isValid()) {
             $article->setCreateAt(new DateTime());
+            $article->setUser($this->getUser());
+            
             $entityManager = $this->getDoctrine()->getManager();
             $entityManager->persist($article);
             $entityManager->flush();
@@ -54,7 +56,7 @@ class ArticleController extends AbstractController
     {
         $comments = $this->getDoctrine()->getRepository(Comment::class)->findBy([
             'article' => $article,
-            'actif' => 1
+            'status' => "V"
         ],['createAt' => 'desc']);
 
         $comment = new Comment();
