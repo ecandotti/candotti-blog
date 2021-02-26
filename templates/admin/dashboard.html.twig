@@ -3,8 +3,65 @@
 {% block title %}Tableau de bord{% endblock %}
 
 {% block body %}
+    {% for messages in app.flashes('msg') %}
+    <div class="alert alert-dismissible alert-warning" >
+        <a class="text-decoration-none text-reset" href="{{ path('admin_manage_comment') }}">
+            <button type="button" class="close" data-dismiss="alert" tabindex="0">&times;</button>
+            {{ messages }}
+        </a>
+    </div>
+    {% endfor %}
     <h1 class="text-center mb-4">Tableau de bord</h1>
 
     {% include "admin/_menu.html.twig" %}
+
+    <section>
+        <div class="my-3">
+            <h2>Vos 5 derniers articles :</h2>
+        </div>
+        <div class="d-flex flex-column">
+        {% for article_item in latest_article %}
+            <a href="{{ path('article_show', {'id': article_item.id}) }}" class="text-decoration-none text-reset">
+                <div class="flex-grow-1 card border-secondary mb-2 mr-2">
+                    <div class="card-header">{{ article_item.title }}</div>
+                    <div class="card-body">
+                        <div>
+                            <img class="img-fluid" src="https://upload.wikimedia.org/wikipedia/commons/5/58/Forggensee_Panorama_SK_0001.jpg" />
+                        </div>
+                        <h6 class="mt-1">
+                            Catégorie : 
+                            <span class="mb-1 text-secondary">{{ article_item.category.name}}</span>
+                        </h6>
+                        
+                        <h6 class="mt-1">
+                            Autheur :
+                            <span class="mb-1 text-secondary">{{ article_item.user.author}}</span>
+                        </h6>
+                        <h6 class="mt-1">
+                            Date :
+                            <span class="mb-1 text-secondary">{{ article_item.createAt|date('d-m-Y') }}</span>
+                        </h6>
+                        <h6 class="mt-1">
+                            Status :
+                            <span class="mb-1 text-secondary">
+                                {% if article_item.status == "P" %}
+                                    <span class="badge badge-pill badge-success">Publié</span>
+                                {% endif %}
+                                {% if article_item.status == "NP" %}
+                                    <span class="badge badge-pill badge-warning">Non publié</span>
+                                {% endif %}
+                            </span>
+                        </h6>
+                    </div>
+                </div>
+            </a>
+        {% endfor %}
+        </div>
+        {% if not latest_article %}
+            <div class="text-center my-4 border p-4 text-muted">
+                Vous semblez ne pas avoir d'article
+            </div>
+        {% endif %}
+    </section>
 
 {% endblock %}
