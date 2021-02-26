@@ -1,6 +1,20 @@
 <section>
-    <h2 class="my-4">Derniers articles :</h2>
+    <div class="d-flex justify-content-between align-items-center my-3">
+        <h2>Derniers articles :</h2>
+        <a href="{{ path('home')}}">Tous les articles</a>
+    </div>
+    <div class="d-flex flex-column flex-lg-row">
     {% for article_item in latest_article %}
-        
+    <a href="{{ path('article_show', {'id': article_item.id}) }}" class="text-decoration-none text-reset">
+        <div class="flex-grow-1 card border-secondary mb-2 mr-2">
+            <div class="card-header">{{ article_item.title }}</div>
+            <div class="card-body">
+                <img class="img-fluid" src="https://upload.wikimedia.org/wikipedia/commons/5/58/Forggensee_Panorama_SK_0001.jpg" />
+                <h6 class="mt-1">Catégorie :</h6>
+                <h6 class="mb-1 text-secondary">{{ article_item.category.name}}</h6>
+            </div>
+        </div>
+    </a>
     {% endfor %}
+    </div>
 </section>
