@@ -3,9 +3,14 @@
 {% block title %}Créer un article{% endblock %}
 
 {% block body %}
-    <a href="{{ path('home') }}"><h3>🏠</h3></a>
-    <h1 class="text-center mb-2">Créer un article</h1>
+    {% if app.user and is_granted('ROLE_ADMIN') %}
+        <a href="{{ path('home') }}"><h3>🏠</h3></a>
+        <h1 class="text-center mb-2">Créer un article</h1>
 
-    {{ include('article/_form.html.twig') }}
+        {{ include('article/_form.html.twig') }}
 
+    {% else %}
+        <a href="{{ path('home') }}"><h3>🏠</h3></a>
+        <h1 class="text-center mb-2">Vous devez posséder le role ADMIN</h1>
+    {% endif %}
 {% endblock %}
