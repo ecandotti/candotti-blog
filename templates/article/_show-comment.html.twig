@@ -1,0 +1,28 @@
+{% if comments %}
+    {% for comment in comments %}
+        <div class="list-group-item flex-column align-items-start my-4">
+            <div class="d-flex w-100 justify-content-between">
+                <h3 class="mb-1">{{ comment.user.author }}</h3>
+                <small class="text-muted">{{ comment.createAt|date }}</small>
+            </div>
+            <div class="mb-1 text-secondary">{{ comment.content }}</div>
+            {% if comment.status == "W" %}
+                <span class="badge badge-pill badge-warning">En attente</span>
+                <a href="{{ path('comment_action', {'status': 'R', 'commentId': comment.id }) }}"class="btn btn-danger">Non approuvé</a>
+                <a href="{{ path('comment_action', {'status': 'V', 'commentId': comment.id }) }}"class="btn btn-success">Approuvé</a>
+            {% endif %}
+            {% if comment.status == "V" %}
+                <span class="badge badge-pill badge-success">Approuvé</span>
+                <a href="{{ path('comment_action', {'status': 'R', 'commentId': comment.id }) }}"class="btn btn-danger">Non approuvé</a>
+            {% endif %}
+            {% if comment.status == "R" %}
+                <span class="badge badge-pill badge-danger">Non approuvé</span>
+                <a href="{{ path('comment_action', {'status': 'V', 'commentId': comment.id }) }}"class="btn btn-success">Approuvé</a>
+            {% endif %}
+        </div>
+    {% endfor %}
+{% else %}
+    <div class="text-center my-4 border p-4 text-muted">
+        Aucun commentaire
+    </div>
+{% endif %}
