@@ -2,14 +2,16 @@
 
 namespace App\Controller;
 
+use App\Entity\Article;
 use App\Entity\Comment;
-use App\Form\CommentType;
 use Knp\Component\Pager\PaginatorInterface;
 use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
 use Symfony\Component\HttpFoundation\Response;
 use Symfony\Component\Routing\Annotation\Route;
 use Sensio\Bundle\FrameworkExtraBundle\Configuration\IsGranted;
 use Symfony\Component\HttpFoundation\Request;
+
+use function Symfony\Component\DependencyInjection\Loader\Configurator\ref;
 
 /**
  * Require ROLE_ADMIN for *every* controller method in this class.
@@ -23,18 +25,54 @@ class AdminController extends AbstractController
      */
     public function adminDashboard(): Response
     {
+        $latest_article = $this->getDoctrine()->getRepository(Article::class)->findBy([
+            'user' => $this->getUser()
+        ], [
+            'createAt' => 'DESC',
+        ],5);
+
+        $comment = $this->getDoctrine()->getRepository(Comment::class)->findBy([
+            'status' => 'W'
+        ]);
+
+        if($comment) {
+            $this->addFlash('msg', 'Des commentaires sont à gérer.');
+        }
+
         return $this->render('admin/dashboard.html.twig', [
-            'controller_name' => 'AdminController',
+            'latest_article' => $latest_article,
         ]);
     }
 
     /**
-     * @Route("/manage", name="admin_manage_comment", methods={"GET"})
+     * @Route("/manage/article", name="admin_manage_article")
+     */
+    public function adminManageArticle(request $request, PaginatorInterface $paginator): Response
+    {
+        $articles = $this->getDoctrine()->getRepository(Article::class)->findBy([
+            'user' => $this->getUser()
+        ],
+            ['createAt' => 'DESC']
+        );
+
+        $articles = $paginator->paginate(
+            $articles, // Requête contenant les données à paginer
+            $request->query->getInt('page', 1), // Numéro de la page en cours, passé dans l'URL, 1 si aucune page
+            10 // Nombre de résultats par page
+        );
+
+        return $this->render('admin/manage-articles.html.twig', [
+            'articles' => $articles,
+        ]);
+    }
+
+    /**
+     * @Route("/manage/comment", name="admin_manage_comment", methods={"GET"})
      */
     public function adminManageComment(request $request, PaginatorInterface $paginator): Response
     {
         $comments = $this->getDoctrine()->getRepository(Comment::class)->findBy([],
-            ['createAt' => 'asc']
+            ['createAt' => 'DESC']
         );
 
         $comments = $paginator->paginate(
@@ -43,7 +81,7 @@ class AdminController extends AbstractController
             10 // Nombre de résultats par page
         );
 
-        return $this->render('admin/manage-comment.html.twig', [
+        return $this->render('admin/manage-comments.html.twig', [
             'comments' => $comments,
         ]);
     }
@@ -64,15 +102,15 @@ class AdminController extends AbstractController
         if ($status == 'V') {
             $comment->setStatus('V');
             $em->flush();
+            $this->addFlash('success', 'Message validé avec succès !');
         } elseif ($status == 'R') {
             $comment->setStatus('R');
             $em->flush();
+            $this->addFlash('success', 'Message refusé avec succès !');
         } else {
             $this->addFlash('error', 'Erreur de l\'action du commentaire !');
             return $this->redirectToRoute('admin_manage_comment');
         }
-
-        $this->addFlash('success', 'Message validé avec succès !');
         return $this->redirectToRoute('admin_manage_comment');
     }
 }
