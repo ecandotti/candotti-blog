@@ -7,7 +7,11 @@
     <a href="{{ path('home') }}"><h3>🏠</h3></a>
     <h1 class="text-center mb-2">Editer l'article</h1>
     
+    <a href="{{ path('article_show', { 'id': article.id }) }}" class="btn btn-primary mb-2">Afficher l'article</a>
+    
     {{ include('article/_form.html.twig', {'button_label': 'Sauvegarder'}) }}
+
+    {{ include('article/_show-comment.html.twig') }}
 
     {{ include('article/_delete_form.html.twig') }}
 {% else %}
