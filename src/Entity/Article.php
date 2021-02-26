@@ -60,6 +60,12 @@ class Article
      */
     private $comments;
 
+    /**
+     * @ORM\Column(type="string", length=5, options={"default": "P"})
+     * P = Published, NP = Not Published)
+     */
+    private $status;
+
     public function __construct()
     {
         $this->comments = new ArrayCollection();
@@ -180,6 +186,18 @@ class Article
                 $comment->setArticle(null);
             }
         }
+
+        return $this;
+    }
+
+    public function getStatus(): ?string
+    {
+        return $this->status;
+    }
+
+    public function setStatus(string $status): self
+    {
+        $this->status = $status;
 
         return $this;
     }
