@@ -1,0 +1,55 @@
+{% extends 'base.html.twig' %}
+
+{% block title %}Tableau de bord{% endblock %}
+
+{% block body %}
+    {% for messages in app.flashes('success') %}
+        <div class="alert alert-dismissible alert-success">
+            <button type="button" class="close" data-dismiss="alert" tabindex="0">&times;</button>
+            {{ messages }}
+        </div>
+    {% endfor %}
+    <h1 class="text-center mb-4">Gérer mes articles</h1>
+
+    {% include "admin/_menu.html.twig" %}
+
+    {% if articles is not empty %}
+        <table class="table table-striped">
+            <thead>
+                <tr>
+                    <th scope="col">Article</th>
+                    <th scope="col">Satuts</th>
+                    <th scope="col">Actions</th>
+                </tr>
+            </thead>
+            <tbody>
+                {% for article in articles %}
+                    <tr>
+                        <th scope="row">{{ article.title }}</th>
+                        <td>
+                            {% if article.status == "P" %}
+                                <span class="badge badge-pill badge-success">Publié</span>
+                            {% endif %}
+                            {% if article.status == "NP" %}
+                                <span class="badge badge-pill badge-warning">Non publié</span>
+                            {% endif %}
+                        </td>
+                        <td>
+                            <div class="d-flex">
+                                <a href="{{ path('article_edit', {'id': article.id}) }}" class="btn btn-warning mr-2 mb-2">Modifier</a>
+                                {{ include('article/_delete_form.html.twig') }}
+                            </div>
+                        </td>
+                    </tr>
+                {% endfor %}
+            </tbody>
+        </table>
+        <div class="text-center">
+            {{ knp_pagination_render(articles) }}
+        </div>
+    {% else %}
+        <div class="text-center my-4 border p-4 text-muted">
+            Aucun article à gérer
+        </div>
+    {% endif %}
+{% endblock %}
