@@ -35,14 +35,15 @@ class Comment
     private $content;
 
     /**
-     * @ORM\Column(type="boolean")
-     */
-    private $actif = false;
-
-    /**
      * @ORM\Column(type="datetime")
      */
     private $createAt;
+
+    /**
+     * @ORM\Column(type="string", length=2, options={"default": "W"}))
+     * W = Wait, V = Valid, R = Refused
+     */
+    private $status;
 
     public function getId(): ?int
     {
@@ -85,18 +86,6 @@ class Comment
         return $this;
     }
 
-    public function getActif(): ?bool
-    {
-        return $this->actif;
-    }
-
-    public function setActif(bool $actif): self
-    {
-        $this->actif = $actif;
-
-        return $this;
-    }
-
     public function getCreateAt(): ?\DateTimeInterface
     {
         return $this->createAt;
@@ -105,6 +94,18 @@ class Comment
     public function setCreateAt(\DateTimeInterface $createAt): self
     {
         $this->createAt = $createAt;
+
+        return $this;
+    }
+
+    public function getStatus(): ?string
+    {
+        return $this->status;
+    }
+
+    public function setStatus(string $status): self
+    {
+        $this->status = $status;
 
         return $this;
     }
