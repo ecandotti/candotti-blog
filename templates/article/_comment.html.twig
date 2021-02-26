@@ -1,14 +1,25 @@
 <div>
     <h2 class="mt-4">Commentaires :</h2>
-    {% for comment in comments %}
-        <div class="list-group-item flex-column align-items-start">
-            <div class="d-flex w-100 justify-content-between">
-                <h3 class="mb-1">{{ comment.user.author }}</h3>
-                <small class="text-muted">{{ comment.createAt|date }}</small>
+    {% if app.user and is_granted('ROLE_ADMIN') %}
+        <a href="{{ path('admin_manage_comment') }}" class="btn btn-warning my-2">Manager les commentaires</a>
+    {% endif %}
+    
+    {% if comments %}
+        {% for comment in comments %}
+            <div class="list-group-item flex-column align-items-start">
+                <div class="d-flex w-100 justify-content-between">
+                    <h3 class="mb-1">{{ comment.user.author }}</h3>
+                    <small class="text-muted">{{ comment.createAt|date }}</small>
+                </div>
+                <div class="mb-1">{{ comment.content }}</div>
             </div>
-            <div class="mb-1">{{ comment.content }}</div>
+        {% endfor %}
+    {% else %}
+        <div class="text-center my-4 border p-4 text-muted">
+            Aucun commentaire
         </div>
-    {% endfor %}
+    {% endif %}
+    
     <div class="my-4">
         <h3>Laissez un commentaire :</h3>
         {% if app.user %}
