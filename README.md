@@ -9,17 +9,22 @@ To Do :
 [X] Initialisation base de données  
 [X] Entité Article, User  
 [X] Entité catégorie  
-[_] Newsletter  
+[X] Newsletter  
 [X] Role, authentification  
 [X] CRUD Article  
 [X] Template Article  
 [X] Home Page  
 [X] About Page  
-[_] Contact Page  
+[X] Contact Page  
 [X] Creation article  
-[_] Interface Admin  
+[X] Interface Admin  
+[X] Laisser un commentaire  
+[_] Temps de lecture    
+[_] Action de masse    
+[_] Filtration    
+[_] Ajouter une image  
+[_] Partager  
 [_] Liker  
-[_] Laisser un commentaire  
 [_] Interface utilisateur  
 [_] Afficher 5 derniers article aimé  
 [_] Afficher 5 derniers article partagé  
