@@ -22,7 +22,13 @@
           Bonjour, <strong>{{ app.user.author}}</strong>
         </a>
         <div class="dropdown-menu text-center">
-          <a class="dropdown-item" href="{{ path('user') }}">Mon compte</a>
+
+        {% if app.user and is_granted('ROLE_ADMIN') %}
+          <a class="dropdown-item" href="{{ path('admin_dashboard') }}">Mon compte</a>
+        {% else %}
+          <a class="dropdown-item" href="{{ path('dashboard') }}">Mon compte</a>
+        {% endif %}
+
         <div class="dropdown-divider"></div>
           <a class="dropdown-item" href="{{ path('logout') }}">Deconnexion</a>
         </div>
