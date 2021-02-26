@@ -1,9 +1,5 @@
 <div>
     <h2 class="mt-4">Commentaires :</h2>
-    {% if app.user and is_granted('ROLE_ADMIN') %}
-        <a href="{{ path('admin_manage_comment') }}" class="btn btn-warning my-2">Manager les commentaires</a>
-    {% endif %}
-    
     {% if comments %}
         {% for comment in comments %}
             <div class="list-group-item flex-column align-items-start">
@@ -11,7 +7,7 @@
                     <h3 class="mb-1">{{ comment.user.author }}</h3>
                     <small class="text-muted">{{ comment.createAt|date }}</small>
                 </div>
-                <div class="mb-1">{{ comment.content }}</div>
+                <div class="mb-1 text-secondary">{{ comment.content }}</div>
             </div>
         {% endfor %}
     {% else %}
