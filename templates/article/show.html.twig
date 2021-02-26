@@ -10,7 +10,8 @@
         </div>
     {% endfor %}
     <a href="{{ path('home') }}"><h3>🏠</h3></a>
-    <h1 class="text-center">{{ article.title }}</h1>
+    <h1 class="text-center">{{ article.title }} {% if article.status == 'NP' %} (Non publié){% endif %}
+    </h1>
     <h6 class="text-center mb-4">{{ article.subTitle }}</h6>
 
     {% if app.user and is_granted('ROLE_ADMIN') %}
@@ -29,6 +30,14 @@
     <div class="my-2" style="overflow-wrap: break-word;">
         {{ article.content }}
     </div>
+    <hr>
+    <a href="{{ path('home') }}">
+        <i class="fas fa-share"></i> Partager
+    </a>
+    <br>
+    <a href="{{ path('home') }}" class="card-link" tabindex="0">
+        <i class="far fa-heart"></i> Aimer
+    </a>
     <hr>
     {% include "article/_comment.html.twig" %}
     <hr>
