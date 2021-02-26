@@ -18,7 +18,7 @@ class CommentFixtures extends Fixture implements DependentFixtureInterface
                 $comment
                     ->setUser($this->getReference('simple-user'))
                     ->setArticle($this->getReference('article'.$i))
-                    ->setActif(true)
+                    ->setStatus("V")
                     ->setContent('foiqjfpozeijrozjerfj => '.$j)
                     ->setCreateAt(new DateTime())
                 ;
