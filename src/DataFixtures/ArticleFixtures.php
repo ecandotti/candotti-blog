@@ -20,6 +20,7 @@ class ArticleFixtures extends Fixture implements DependentFixtureInterface
                 ->setTitle('I\'m the title n°'. $i)
                 ->setSubtitle('Hi \'m the subtitle')
                 ->setCreateAt(new DateTime())
+                ->setStatus('P')
                 ->setReadTime(4)
                 ->setContent('
 
