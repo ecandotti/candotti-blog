@@ -20,7 +20,9 @@ class MainController extends AbstractController
      */
     public function home(Request $request, PaginatorInterface $paginator): Response
     {
-        $articles = $this->getDoctrine()->getRepository(Article::class)->findBy([],['createAt' => 'asc']);
+        $articles = $this->getDoctrine()->getRepository(Article::class)->findBy([
+            'status' => 'P'
+        ],['createAt' => 'DESC']);
 
         $articles = $paginator->paginate(
             $articles, // Requête contenant les données à paginer
@@ -79,7 +81,6 @@ class MainController extends AbstractController
             $entityManager->flush();
 
             $this->addFlash('success', 'Message envoyé avec succès, la réponse se fera dans nos meilleurs délais.');
-            return $this->redirectToRoute('contact');
         }
 
         return $this->render('contact.html.twig', [
