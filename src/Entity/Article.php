@@ -66,9 +66,27 @@ class Article
      */
     private $status;
 
+    /**
+     * @ORM\OneToMany(targetEntity=Image::class, mappedBy="article")
+     */
+    private $images;
+
+    /**
+     * @ORM\ManyToMany(targetEntity=User::class, inversedBy="favorites")
+     */
+    private $favorites;
+
+    /**
+     * @ORM\ManyToMany(targetEntity=User::class, mappedBy="share")
+     */
+    private $share;
+
     public function __construct()
     {
         $this->comments = new ArrayCollection();
+        $this->images = new ArrayCollection();
+        $this->favorites = new ArrayCollection();
+        $this->share = new ArrayCollection();
     }
 
     public function getId(): ?int
@@ -198,6 +216,87 @@ class Article
     public function setStatus(string $status): self
     {
         $this->status = $status;
+
+        return $this;
+    }
+
+    /**
+     * @return Collection|Image[]
+     */
+    public function getImages(): Collection
+    {
+        return $this->images;
+    }
+
+    public function addImage(Image $image): self
+    {
+        if (!$this->images->contains($image)) {
+            $this->images[] = $image;
+            $image->setArticle($this);
+        }
+
+        return $this;
+    }
+
+    public function removeImage(Image $image): self
+    {
+        if ($this->images->removeElement($image)) {
+            // set the owning side to null (unless already changed)
+            if ($image->getArticle() === $this) {
+                $image->setArticle(null);
+            }
+        }
+
+        return $this;
+    }
+
+    /**
+     * @return Collection|User[]
+     */
+    public function getFavorites(): Collection
+    {
+        return $this->favorites;
+    }
+
+    public function addFavorite(User $favorite): self
+    {
+        if (!$this->favorites->contains($favorite)) {
+            $this->favorites[] = $favorite;
+        }
+
+        return $this;
+    }
+
+    public function removeFavorite(User $favorite): self
+    {
+        $this->favorites->removeElement($favorite);
+
+        return $this;
+    }
+
+    /**
+     * @return Collection|User[]
+     */
+    public function getShare(): Collection
+    {
+        return $this->share;
+    }
+
+    public function addShare(User $share): self
+    {
+        if (!$this->share->contains($share)) {
+            $this->share[] = $share;
+            $share->addShare($this);
+        }
+
+        return $this;
+    }
+
+    public function removeShare(User $share): self
+    {
+        if ($this->share->removeElement($share)) {
+            $share->removeShare($this);
+        }
 
         return $this;
     }
