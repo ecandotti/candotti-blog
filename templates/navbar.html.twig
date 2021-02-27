@@ -26,7 +26,7 @@
         {% if app.user and is_granted('ROLE_ADMIN') %}
           <a class="dropdown-item" href="{{ path('admin_dashboard') }}">Mon compte</a>
         {% else %}
-          <a class="dropdown-item" href="{{ path('dashboard') }}">Mon compte</a>
+          <a class="dropdown-item" href="{{ path('user_dashboard') }}">Mon compte</a>
         {% endif %}
 
         <div class="dropdown-divider"></div>
