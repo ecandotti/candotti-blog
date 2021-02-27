@@ -11,6 +11,7 @@ use Knp\Component\Pager\PaginatorInterface;
 use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
 use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpFoundation\Response;
+use Symfony\Component\HttpKernel\Exception\NotFoundHttpException;
 use Symfony\Component\Routing\Annotation\Route;
 
 class MainController extends AbstractController
@@ -45,9 +46,9 @@ class MainController extends AbstractController
 
         if (!empty($form->get('email')->getData()) && is_string($form->get('email')->getData())) {
             $newsletter->setEmail($form->get('email')->getData());
-            $entityManager = $this->getDoctrine()->getManager();
-            $entityManager->persist($newsletter);
-            $entityManager->flush();
+            $em = $this->getDoctrine()->getManager();
+            $em->persist($newsletter);
+            $em->flush();
 
             $this->addFlash('success', 'Inscription à la newsletter réussis !');
             return $this->redirectToRoute('home');
@@ -76,9 +77,9 @@ class MainController extends AbstractController
         $form->handleRequest($request);
 
         if ($form->isSubmitted() && $form->isValid()) {
-            $entityManager = $this->getDoctrine()->getManager();
-            $entityManager->persist($contact);
-            $entityManager->flush();
+            $em = $this->getDoctrine()->getManager();
+            $em->persist($contact);
+            $em->flush();
 
             $this->addFlash('success', 'Message envoyé avec succès, la réponse se fera dans nos meilleurs délais.');
         }
@@ -87,5 +88,81 @@ class MainController extends AbstractController
             'contact' => $contact,
             'contactForm' => $form->createView(),
         ]);
+    }
+
+    /**
+     * @Route("/favorites/add/{id}", name="add_favorites")
+     */
+    public function addFavorites($id, Article $article)
+    {
+        if (!$article) {
+            throw new NotFoundHttpException('Article non trouvé');
+        }
+        
+        $article->addFavorite($this->getUser());
+
+        $em = $this->getDoctrine()->getManager();
+        $em->persist($article);
+        $em->flush();
+
+        $this->addFlash('success', 'Article ajouté aux favoris !');
+        return $this->redirectToRoute('home');
+    }
+
+    /**
+     * @Route("/favorites/remove/{id}", name="del_favorites")
+     */
+    public function removeFavorites($id, Article $article)
+    {
+        if (!$article) {
+            throw new NotFoundHttpException('Article non trouvé');
+        }
+        
+        $article->removeFavorite($this->getUser());
+
+        $em = $this->getDoctrine()->getManager();
+        $em->persist($article);
+        $em->flush();
+
+        $this->addFlash('success', 'Article retiré des favoris !');
+        return $this->redirectToRoute('home');
+    }
+
+    /**
+     * @Route("/share/add/{id}", name="add_share")
+     */
+    public function addShare($id, Article $article)
+    {
+        if (!$article) {
+            throw new NotFoundHttpException('Article non trouvé');
+        }
+        
+        $article->addFavorite($this->getUser());
+
+        $em = $this->getDoctrine()->getManager();
+        $em->persist($article);
+        $em->flush();
+
+        $this->addFlash('success', 'Article partagé !');
+        return $this->redirectToRoute('home');
+    }
+
+    /**
+     * @Route("/share/remove/{id}", name="del_share")
+     */
+    public function removeShare($id, Article $article)
+    {
+        if (!$article) {
+            throw new NotFoundHttpException('Article non trouvé');
+        }
+        
+        $article->removeFavorite($this->getUser());
+
+        $em = $this->getDoctrine()->getManager();
+        $em->persist($article);
+        $em->flush();
+
+        $this->addFlash('success', 'Article retiré de vos partages !');
+        return $this->redirectToRoute('home');
     }
 }
