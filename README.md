@@ -21,6 +21,7 @@ To Do :
 [X] Laisser un commentaire  
 [_] Temps de lecture    
 [_] Action de masse    
+[_] Trier    
 [_] Filtration    
 [_] Ajouter une image  
 [_] Partager  
