@@ -1,0 +1,28 @@
+<section class="my-4">
+    <div class="my-3">
+        <h2>Vos 5 derniers articles commentés :</h2>
+    </div>
+    <div class="d-flex flex-column flex-lg-row">
+    {% for article_item in latest_article %}
+        <a href="{{ path('article_show', {'id': article_item.id}) }}" class="text-decoration-none text-reset">
+            <div class="flex-grow-1 card border-secondary mb-2 mr-2">
+                <div class="card-header">{{ article_item.title }}</div>
+                <div class="card-body">
+                    <div>
+                        <img class="img-fluid" src="https://upload.wikimedia.org/wikipedia/commons/5/58/Forggensee_Panorama_SK_0001.jpg" />
+                    </div>
+                    <h6 class="mt-1">
+                        Catégorie : 
+                        <span class="mb-1 text-secondary">{{ article_item.category.name}}</span>
+                    </h6>
+                </div>
+            </div>
+        </a>
+    {% endfor %}
+    </div>
+    {% if not latest_article %}
+        <div class="text-center my-4 border p-4 text-muted">
+            Vous semblez ne pas avoir d'article commenté
+        </div>
+    {% endif %}
+</section>

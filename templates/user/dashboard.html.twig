@@ -1,0 +1,16 @@
+{% extends 'base.html.twig' %}
+
+{% block title %}Tableau de bord{% endblock %}
+
+{% block body %}
+    <h1 class="text-center mb-4">Tableau de bord</h1>
+
+    {% include "user/_menu.html.twig" %}
+
+    {% include "user/_latest-like.html.twig" %}
+
+    {% include "user/_latest-share.html.twig" %}
+
+    {% include "user/_latest-comment.html.twig" %}
+
+{% endblock %}
