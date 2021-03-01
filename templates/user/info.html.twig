@@ -3,13 +3,25 @@
 {% block title %}Informations personnelles{% endblock %}
 
 {% block body %}
+    {% for messages in app.flashes('success') %}
+        <div class="alert alert-dismissible alert-success">
+            <button type="button" class="close" data-dismiss="alert" tabindex="0">&times;</button>
+            {{ messages }}
+        </div>
+    {% endfor %}
     <h1 class="text-center mb-4">Vos informations personnelles</h1>
 
     {% include "user/_menu.html.twig" %}
 
     <section>
         <div class="d-flex flex-column">
-            ok
+            {{ form_start(userForm) }}
+                {{ form_row(userForm.last_name) }}
+                {{ form_row(userForm.first_name) }}
+                {{ form_row(userForm.email) }}
+                {{ form_row(userForm.phone) }}
+                {{ form_row(userForm.save) }}
+            {{ form_end(userForm) }}
         </div>
     </section>
 
