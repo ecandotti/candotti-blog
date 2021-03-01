@@ -55,33 +55,13 @@
                         <p class="card-text">{{ article.content|slice(0,20) ~ '...' }}</p>
                     </div>
                     <ul class="list-group list-group-flush">
-                        <li class="list-group-item">Comedie</li>
+                        <li class="list-group-item">{{ article.category.name }}</li>
                     </ul>
                     <div class="card-body">
-                        <a href="{{ path('home') }}" class="card-link" tabindex="0">
-                            <i class="fas fa-share"></i>
-                        </a>
-                        {% if app.user %}
-                            {% for favorites in article.favorites %}
-                                {% if favorites.id == app.user.id %}
-                                    <a href="{{ path('del_favorites', { 'id': article.id }) }}" class="card-link" tabindex="0">
-                                        <i class="fas fa-heart"></i>
-                                    </a>
-                                {% else %}
-                                    <a href="{{ path('add_favorites', { 'id': article.id }) }}" class="card-link" tabindex="0">
-                                        <i class="far fa-heart"></i>
-                                    </a>
-                                {% endif %}
-                            {% else %}
-                                <a href="{{ path('add_favorites', { 'id': article.id }) }}" class="card-link" tabindex="0">
-                                    <i class="far fa-heart"></i>
-                                </a>
-                            {% endfor %}
-                        {% else %}
-                            <a href="{{ path('add_favorites', { 'id': article.id }) }}" class="card-link" tabindex="0">
-                                <i class="far fa-heart"></i>
-                            </a>
-                        {% endif %}
+
+                        {% include "_share-btn.html.twig" %}
+                        {% include "_like-btn.html.twig" %}
+
                         <a href="{{ path('article_show', {'id': article.id}) }}" class="card-link" tabindex="0">
                             Voir l'article
                         </a>
