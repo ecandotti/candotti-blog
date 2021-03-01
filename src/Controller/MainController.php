@@ -4,9 +4,12 @@ namespace App\Controller;
 
 use App\Entity\Article;
 use App\Entity\Contact;
+use App\Entity\Like;
 use App\Entity\NewsLetter;
+use App\Entity\Share;
 use App\Form\ContactType;
 use App\Form\NewsLetterType;
+use DateTime;
 use Knp\Component\Pager\PaginatorInterface;
 use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
 use Symfony\Component\HttpFoundation\Request;
@@ -91,78 +94,130 @@ class MainController extends AbstractController
     }
 
     /**
-     * @Route("/favorites/add/{id}", name="add_favorites")
+     * @Route("/likes/{id}", name="add_likes")
      */
-    public function addFavorites($id, Article $article)
+    public function addLikes($id, Article $article)
     {
+        $em = $this->getDoctrine()->getManager();
+        
         if (!$article) {
             throw new NotFoundHttpException('Article non trouvé');
         }
-        
-        $article->addFavorite($this->getUser());
 
-        $em = $this->getDoctrine()->getManager();
-        $em->persist($article);
-        $em->flush();
+        $user = $this->getUser();
 
-        $this->addFlash('success', 'Article ajouté aux favoris !');
-        return $this->redirectToRoute('home');
+        $alreadyLike = $em->getRepository(Like::class)->findOneBy([
+            'user' => $user,
+            'article' => $article
+        ]);
+
+        if ($alreadyLike) {
+            $this->addFlash('error', 'Vous avez déjà cet article en favoris !');
+            return $this->redirectToRoute('home');
+        } else {
+            $like = new Like();
+            $like->setArticle($article);
+            $like->setUser($user);
+            $like->setCreateAt(new DateTime());
+            $em->persist($like);
+            $em->flush();
+
+            $this->addFlash('success', 'Article ajouté aux favoris !');
+            return $this->redirectToRoute('home');
+        }
     }
 
     /**
-     * @Route("/favorites/remove/{id}", name="del_favorites")
+     * @Route("/likes/remove/{id}", name="del_likes")
      */
-    public function removeFavorites($id, Article $article)
+    public function removeLikes($id, Article $article)
     {
+        $em = $this->getDoctrine()->getManager();
+        
         if (!$article) {
             throw new NotFoundHttpException('Article non trouvé');
         }
-        
-        $article->removeFavorite($this->getUser());
 
-        $em = $this->getDoctrine()->getManager();
-        $em->persist($article);
-        $em->flush();
+        $user = $this->getUser();
 
-        $this->addFlash('success', 'Article retiré des favoris !');
-        return $this->redirectToRoute('home');
+        $alreadyLike = $em->getRepository(Like::class)->findOneBy([
+            'user' => $user,
+            'article' => $article
+        ]);
+
+        if ($alreadyLike) {
+            $em->remove($alreadyLike);
+            $em->flush();
+
+            $this->addFlash('success', 'Article retiré de vos favoris !');
+            return $this->redirectToRoute('home');
+        } else {
+            $this->addFlash('error', 'Cet article n\'est pas dans vos favoris !');
+            return $this->redirectToRoute('home');
+        }
     }
 
     /**
-     * @Route("/share/add/{id}", name="add_share")
+     * @Route("/shares/add/{id}", name="add_shares")
      */
-    public function addShare($id, Article $article)
+    public function addShares($id, Article $article)
     {
+        $em = $this->getDoctrine()->getManager();
+        
         if (!$article) {
             throw new NotFoundHttpException('Article non trouvé');
         }
-        
-        $article->addFavorite($this->getUser());
 
-        $em = $this->getDoctrine()->getManager();
-        $em->persist($article);
-        $em->flush();
+        $user = $this->getUser();
 
-        $this->addFlash('success', 'Article partagé !');
-        return $this->redirectToRoute('home');
+        $alreadyShare = $em->getRepository(Share::class)->findOneBy([
+            'user' => $user,
+            'article' => $article
+        ]);
+
+        if ($alreadyShare) {
+            $this->addFlash('error', 'Vous avez déjà partagé cet article !');
+            return $this->redirectToRoute('home');
+        } else {
+            $share = new Share();
+            $share->setArticle($article);
+            $share->setUser($user);
+            $share->setCreateAt(new DateTime());
+            $em->persist($share);
+            $em->flush();
+
+            $this->addFlash('success', 'Article partagé avec succès !');
+            return $this->redirectToRoute('home');
+        }
     }
 
     /**
-     * @Route("/share/remove/{id}", name="del_share")
+     * @Route("/shares/remove/{id}", name="del_shares")
      */
-    public function removeShare($id, Article $article)
+    public function removeShares($id, Article $article)
     {
+        $em = $this->getDoctrine()->getManager();
+        
         if (!$article) {
             throw new NotFoundHttpException('Article non trouvé');
         }
-        
-        $article->removeFavorite($this->getUser());
 
-        $em = $this->getDoctrine()->getManager();
-        $em->persist($article);
-        $em->flush();
+        $user = $this->getUser();
 
-        $this->addFlash('success', 'Article retiré de vos partages !');
-        return $this->redirectToRoute('home');
+        $alreadyShare = $em->getRepository(Share::class)->findOneBy([
+            'user' => $user,
+            'article' => $article
+        ]);
+
+        if ($alreadyShare) {
+            $em->remove($alreadyShare);
+            $em->flush();
+
+            $this->addFlash('success', 'Article retiré de vos partages !');
+            return $this->redirectToRoute('home');
+        } else {
+            $this->addFlash('error', 'Vous n\'avez pas partagé cet article !');
+            return $this->redirectToRoute('home');
+        }
     }
 }
