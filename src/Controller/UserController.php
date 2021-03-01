@@ -158,7 +158,8 @@ class UserController extends AbstractController
     public function adminDashboard(Request $request, PaginatorInterface $paginator): Response
     {
         $articles_comment = $this->getDoctrine()->getRepository(Comment::class)->findBy([
-            'user' => $this->getUser()
+            'user' => $this->getUser(),
+            'status' => 'V'
         ],['createAt' => 'DESC']);
 
         $articles = $paginator->paginate(
