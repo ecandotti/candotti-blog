@@ -72,21 +72,21 @@ class Article
     private $images;
 
     /**
-     * @ORM\ManyToMany(targetEntity=User::class, inversedBy="favorites")
+     * @ORM\OneToMany(targetEntity=Like::class, mappedBy="article")
      */
-    private $favorites;
+    private $likes;
 
     /**
-     * @ORM\ManyToMany(targetEntity=User::class, mappedBy="share")
+     * @ORM\OneToMany(targetEntity=Share::class, mappedBy="article")
      */
-    private $share;
+    private $shares;
 
     public function __construct()
     {
         $this->comments = new ArrayCollection();
         $this->images = new ArrayCollection();
-        $this->favorites = new ArrayCollection();
-        $this->share = new ArrayCollection();
+        $this->likes = new ArrayCollection();
+        $this->shares = new ArrayCollection();
     }
 
     public function getId(): ?int
@@ -251,51 +251,60 @@ class Article
     }
 
     /**
-     * @return Collection|User[]
+     * @return Collection|Like[]
      */
-    public function getFavorites(): Collection
+    public function getLikes(): Collection
     {
-        return $this->favorites;
+        return $this->likes;
     }
 
-    public function addFavorite(User $favorite): self
+    public function addLike(Like $like): self
     {
-        if (!$this->favorites->contains($favorite)) {
-            $this->favorites[] = $favorite;
+        if (!$this->likes->contains($like)) {
+            $this->likes[] = $like;
+            $like->setArticle($this);
         }
 
         return $this;
     }
 
-    public function removeFavorite(User $favorite): self
+    public function removeLike(Like $like): self
     {
-        $this->favorites->removeElement($favorite);
+        if ($this->likes->removeElement($like)) {
+            // set the owning side to null (unless already changed)
+            if ($like->getArticle() === $this) {
+                $like->setArticle(null);
+            }
+        }
 
         return $this;
     }
 
     /**
-     * @return Collection|User[]
+     * @return Collection|Share[]
      */
-    public function getShare(): Collection
+    public function getShares(): Collection
     {
-        return $this->share;
+        return $this->shares;
     }
 
-    public function addShare(User $share): self
+    public function addShare(Share $share): self
     {
-        if (!$this->share->contains($share)) {
-            $this->share[] = $share;
-            $share->addShare($this);
+        if (!$this->shares->contains($share)) {
+            $this->shares[] = $share;
+            $share->setArticle($this);
         }
 
         return $this;
     }
 
-    public function removeShare(User $share): self
+    public function removeShare(Share $share): self
     {
-        if ($this->share->removeElement($share)) {
-            $share->removeShare($this);
+        if ($this->shares->removeElement($share)) {
+            // set the owning side to null (unless already changed)
+            if ($share->getArticle() === $this) {
+                $share->setArticle(null);
+            }
         }
 
         return $this;
