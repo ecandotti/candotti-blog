@@ -59,7 +59,7 @@ class User implements UserInterface
     private $phone;
 
     /**
-     * @ORM\OneToMany(targetEntity=Article::class, mappedBy="author", orphanRemoval=true)
+     * @ORM\OneToMany(targetEntity=Article::class, mappedBy="user", orphanRemoval=true)
      */
     private $articles;
 
@@ -69,21 +69,21 @@ class User implements UserInterface
     private $comments;
 
     /**
-     * @ORM\ManyToMany(targetEntity=Article::class, mappedBy="favorites")
+     * @ORM\OneToMany(targetEntity=Like::class, mappedBy="user")
      */
-    private $favorites;
+    private $likes;
 
     /**
-     * @ORM\ManyToMany(targetEntity=Article::class, inversedBy="share")
+     * @ORM\OneToMany(targetEntity=Share::class, mappedBy="user")
      */
-    private $share;
+    private $shares;
 
     public function __construct()
     {
         $this->articles = new ArrayCollection();
         $this->comments = new ArrayCollection();
-        $this->favorites = new ArrayCollection();
-        $this->share = new ArrayCollection();
+        $this->likes = new ArrayCollection();
+        $this->shares = new ArrayCollection();
     }
 
     public function getId(): ?int
@@ -276,52 +276,61 @@ class User implements UserInterface
     }
 
     /**
-     * @return Collection|Article[]
+     * @return Collection|Like[]
      */
-    public function getFavorites(): Collection
+    public function getLikes(): Collection
     {
-        return $this->favorites;
+        return $this->likes;
     }
 
-    public function addFavorite(Article $favorite): self
+    public function addLike(Like $like): self
     {
-        if (!$this->favorites->contains($favorite)) {
-            $this->favorites[] = $favorite;
-            $favorite->addFavorite($this);
+        if (!$this->likes->contains($like)) {
+            $this->likes[] = $like;
+            $like->setUser($this);
         }
 
         return $this;
     }
 
-    public function removeFavorite(Article $favorite): self
+    public function removeLike(Like $like): self
     {
-        if ($this->favorites->removeElement($favorite)) {
-            $favorite->removeFavorite($this);
+        if ($this->likes->removeElement($like)) {
+            // set the owning side to null (unless already changed)
+            if ($like->getUser() === $this) {
+                $like->setUser(null);
+            }
         }
 
         return $this;
     }
 
     /**
-     * @return Collection|Article[]
+     * @return Collection|Share[]
      */
-    public function getShare(): Collection
+    public function getShares(): Collection
     {
-        return $this->share;
+        return $this->shares;
     }
 
-    public function addShare(Article $share): self
+    public function addShare(Share $share): self
     {
-        if (!$this->share->contains($share)) {
-            $this->share[] = $share;
+        if (!$this->shares->contains($share)) {
+            $this->shares[] = $share;
+            $share->setUser($this);
         }
 
         return $this;
     }
 
-    public function removeShare(Article $share): self
+    public function removeShare(Share $share): self
     {
-        $this->share->removeElement($share);
+        if ($this->shares->removeElement($share)) {
+            // set the owning side to null (unless already changed)
+            if ($share->getUser() === $this) {
+                $share->setUser(null);
+            }
+        }
 
         return $this;
     }
