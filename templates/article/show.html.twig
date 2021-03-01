@@ -31,27 +31,9 @@
         {{ article.content }}
     </div>
     <hr>
-    <a href="{{ path('home') }}">
-        <i class="fas fa-share"></i> Partager
-    </a>
     <br>
-    {% if app.user %}
-        {% for favorites in article.favorites %}
-            {% if favorites.id == app.user.id %}
-                <a href="{{ path('del_favorites', { 'id': article.id }) }}" class="card-link" tabindex="0">
-                    <i class="fas fa-heart"></i>
-                </a>
-            {% else %}
-                <a href="{{ path('add_favorites', { 'id': article.id }) }}" class="card-link" tabindex="0">
-                    <i class="far fa-heart"></i>
-                </a>
-            {% endif %}
-        {% endfor %}
-    {% else %}
-        <a href="{{ path('add_favorites', { 'id': article.id }) }}" class="card-link" tabindex="0">
-            <i class="far fa-heart"></i>
-        </a>
-    {% endif %}
+    {% include "_share-btn.html.twig" %}
+    {% include "_like-btn.html.twig" %}
     <hr>
     {% include "article/_comment.html.twig" %}
     <hr>
