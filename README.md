@@ -22,10 +22,14 @@ To Do :
 [_] Temps de lecture    
 [_] Action de masse    
 [_] Trier    
+[_] Fix like / share double      
+[_] delete author variable        
+[_] Nombre de like        
+[_] Forgot pass        
 [_] Filtration    
 [_] Ajouter une image  
-[_] Partager  
-[_] Liker  
-[_] Interface utilisateur  
-[_] Afficher 5 derniers article aimé  
-[_] Afficher 5 derniers article partagé  
+[X] Partager  
+[X] Liker  
+[X] Interface utilisateur  
+[X] Afficher 5 derniers article aimé  
+[X] Afficher 5 derniers article partagé  
