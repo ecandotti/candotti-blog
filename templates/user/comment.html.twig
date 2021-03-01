@@ -22,6 +22,11 @@
             <div class="card-body">
                 <p class="card-text">{{ comment.article.content|slice(0,20) ~ '...' }}</p>
             </div>
+            <hr>
+            <div class="container">
+                <h5><u>Votre commentaire :</u></h5>
+                <h6>{{ comment.content }}</h6>
+            </div>
             <div class="card-footer text-muted">
                 Le {{ comment.article.createAt ? comment.article.createAt|date('d-m-Y') : '' }} par {{ comment.article.user.author}}.
             </div>
