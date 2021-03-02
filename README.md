@@ -19,17 +19,17 @@ To Do :
 [X] Creation article  
 [X] Interface Admin  
 [X] Laisser un commentaire  
-[_] Temps de lecture    
-[_] Action de masse    
-[_] Trier    
-[_] Fix like / share double      
-[_] delete author variable        
-[_] Nombre de like        
-[_] Forgot pass        
-[_] Filtration    
-[_] Ajouter une image  
+[X] Temps de lecture    
 [X] Partager  
-[X] Liker  
 [X] Interface utilisateur  
 [X] Afficher 5 derniers article aimé  
 [X] Afficher 5 derniers article partagé  
+[X] Liker  
+[X] Nombre de like        
+[_] Ajouter une image  
+[_] Forgot pass        
+[_] Trier    
+[_] delete author variable        
+[_] Filtration    
+[_] Action de masse    
+[_] Fix like / share double      
