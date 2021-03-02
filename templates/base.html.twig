@@ -61,10 +61,16 @@
 
                         {% include "_share-btn.html.twig" %}
                         {% include "_like-btn.html.twig" %}
-
                         <a href="{{ path('article_show', {'id': article.id}) }}" class="card-link" tabindex="0">
                             Voir l'article
                         </a>
+                        <div class="mt-2 text-info">
+                            {% if article.likes|length > 1 %}
+                                {{ article.likes|length }} likes
+                            {% else %}
+                                {{ article.likes|length }} like
+                            {% endif %}
+                        </div>
                     </div>
                     <div class="card-footer text-muted">
                         Le {{ article.createAt ? article.createAt|date('d-m-Y') : '' }} par {{ article.user.author}}.
