@@ -28,13 +28,39 @@ class MainController extends AbstractController
             'status' => 'P'
         ],['createAt' => 'DESC']);
 
+        for ($i=0; $i < count($articles); $i++) { 
+            $isLiked  = $this->getDoctrine()->getRepository(Like::class)->findBy([
+                'user' => $this->getUser(),
+                'article' => $articles[$i]->getId()
+            ]);
+
+            $isShared  = $this->getDoctrine()->getRepository(Share::class)->findBy([
+                'user' => $this->getUser(),
+                'article' => $articles[$i]->getId()
+            ]);
+            
+            if ($isShared) {
+                $articles[$i]->alreadyShare = true;
+            } else {
+                $articles[$i]->alreadyShare = false;
+            }
+
+            if ($isLiked) {
+                $articles[$i]->alreadyLike = true;
+            } else {
+                $articles[$i]->alreadyLike = false;
+            }
+        }
+
         $articles = $paginator->paginate(
             $articles, // Requête contenant les données à paginer
             $request->query->getInt('page', 1), // Numéro de la page en cours, passé dans l'URL, 1 si aucune page
             10 // Nombre de résultats par page
         );
 
-        return $this->render('base.html.twig', compact('articles'));
+        return $this->render('base.html.twig', [
+            'articles' => $articles
+        ]);
     }
 
     /**

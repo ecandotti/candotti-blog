@@ -4,8 +4,8 @@
         {% for comment in comments %}
             <div class="list-group-item flex-column align-items-start">
                 <div class="d-flex w-100 justify-content-between">
-                    <h3 class="mb-1">{{ comment.user.author }}</h3>
-                    <small class="text-muted">{{ comment.createAt|date }}</small>
+                    <h6 class="mb-1">{{ comment.user.email }} - {{ comment.user.lastName }}</h6>
+                    <span class="text-muted">{{ comment.createAt|date }}</span>
                 </div>
                 <div class="mb-1 text-secondary">{{ comment.content }}</div>
             </div>

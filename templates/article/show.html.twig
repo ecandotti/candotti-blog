@@ -21,9 +21,9 @@
     </div>
     {% endif %}
 
-    <h6 class="text-muted"><strong>Autheur :</strong> {{ article.user.author ? article.user.author : 'empty' }}</h6>
-    <h6 class="text-muted"><strong>Date de création :</strong> {{ article.createAt ? article.createAt|date('d-m-Y') : 'empty' }}</h6>
-    <h6 class="text-muted"><strong>Temps de lecture :</strong> {{ article.readTime ? article.readTime : 'none' }} minutes</h6>
+    <h6 class="text-muted"><strong>Autheur :</strong> {{ article.user.email }}</h6>
+    <h6 class="text-muted"><strong>Date de création :</strong> {{ article.createAt|date('d-m-Y') }}</h6>
+    <h6 class="text-muted"><strong>Temps de lecture :</strong> {{ article.readTime }} minutes</h6>
     <h6 class="text-muted"><strong>Categorie :</strong> {{ article.category.name }}</h6>
     <hr>
     <img class="img-fluid" src="https://blog.parkinn.com/wp-content/uploads/sites/7/2013/11/astana-city-panoramic-view.jpg"/>
@@ -34,6 +34,13 @@
     <br>
     {% include "_share-btn.html.twig" %}
     {% include "_like-btn.html.twig" %}
+    <div class="mt-2 text-info">
+        {% if article.likes|length > 1 %}
+            {{ article.likes|length }} likes
+        {% else %}
+            {{ article.likes|length }} like
+        {% endif %}
+    </div>
     <hr>
     {% include "article/_comment.html.twig" %}
     <hr>

@@ -29,10 +29,6 @@ class RegistrationFormType extends AbstractType
                 'first_options'  => ['label' => 'Mot de passe'],
                 'second_options' => ['label' => 'Confirmer votre mot de passe'],
             ])
-            ->add('author', TextType::class, [
-                'required' => true,
-                'label' => 'Nom d\'autheur',
-            ])
             ->add('first_name', TextType::class, [
                 'required' => true,
                 'label' => 'Prénom',

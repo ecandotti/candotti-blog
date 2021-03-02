@@ -21,7 +21,6 @@ class UserFixtures extends Fixture
     {
         $user = new User();
         $user
-            ->setAuthor('simple-user')
             ->setFirstName('Barry')
             ->setLastName('Alen')
             ->setPhone('+33 123456789')
@@ -35,7 +34,6 @@ class UserFixtures extends Fixture
 
         $admin = new User();
         $admin
-            ->setAuthor('admin')
             ->setFirstName('Suprem')
             ->setLastName('Admin')
             ->setPhone('+33 66666666')

@@ -4,6 +4,8 @@ namespace App\Controller;
 
 use App\Entity\Article;
 use App\Entity\Comment;
+use App\Entity\Like;
+use App\Entity\Share;
 use App\Entity\User;
 use App\Form\ArticleType;
 use App\Form\CommentType;
@@ -70,6 +72,28 @@ class ArticleController extends AbstractController
         $latest_article = $this->getDoctrine()->getRepository(Article::class)->findBy([], [
             'createAt' => 'desc',
         ],5);
+
+        $isShared  = $this->getDoctrine()->getRepository(Share::class)->findBy([
+                'user' => $this->getUser(),
+                'article' => $article->getId()
+            ]);
+            
+        if ($isShared) {
+            $article->alreadyShare = true;
+        } else {
+            $article->alreadyShare = false;
+        }
+
+        $isLiked  = $this->getDoctrine()->getRepository(Like::class)->findBy([
+            'user' => $this->getUser(),
+            'article' => $article->getId()
+        ]);
+        
+        if ($isLiked) {
+            $article->alreadyLike = true;
+        } else {
+            $article->alreadyLike = false;
+        }
 
         $comment = new Comment();
         $form = $this->createForm(CommentType::class, $comment);
