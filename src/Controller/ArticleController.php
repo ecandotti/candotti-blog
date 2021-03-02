@@ -32,6 +32,14 @@ class ArticleController extends AbstractController
         $form->handleRequest($request);
 
         if ($form->isSubmitted() && $form->isValid()) {
+            $readTime = $form->getData()->getReadTime();
+            
+            // ReadTime function
+            if ($readTime == NULL) {
+                $len_content = strlen($form->getData()->getContent());
+                $article->setReadTime(round($len_content / 60));
+            }
+            
             $article->setCreateAt(new DateTime());
             $article->setUser($this->getUser());
             

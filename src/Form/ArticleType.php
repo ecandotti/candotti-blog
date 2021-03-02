@@ -28,7 +28,7 @@ class ArticleType extends AbstractType
                 'label' => 'Sous Titre',
             ])
             ->add('readTime', NumberType::class, [
-                'required' => true,
+                'required' => false,
                 'label' => 'Temps de lecture',
             ])
             ->add('content', TextareaType::class, [
