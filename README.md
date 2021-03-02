@@ -26,10 +26,10 @@ To Do :
 [X] Afficher 5 derniers article partagé  
 [X] Liker  
 [X] Nombre de like        
+[X] delete author variable        
+[X] Fix like / share double      
 [_] Ajouter une image  
 [_] Forgot pass        
 [_] Trier    
-[_] delete author variable        
 [_] Filtration    
 [_] Action de masse    
-[_] Fix like / share double      
