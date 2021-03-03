@@ -23,7 +23,7 @@ class Image
     private $name;
 
     /**
-     * @ORM\ManyToOne(targetEntity=Article::class, inversedBy="images")
+     * @ORM\OneToOne(targetEntity=Article::class, inversedBy="image", cascade={"persist", "remove"})
      */
     private $article;
 
