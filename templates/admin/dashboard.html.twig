@@ -26,7 +26,14 @@
                     <div class="card-header">{{ article_item.title }}</div>
                     <div class="card-body">
                         <div>
-                            <img class="img-fluid" src="https://upload.wikimedia.org/wikipedia/commons/5/58/Forggensee_Panorama_SK_0001.jpg" />
+                            {% if article_item.image %}
+                                <img src="{{ asset('/uploads/' ~ article_item.image.name) }}" alt="" height="200" width="100%"/>
+                            {% else %}
+                                <svg xmlns="http://www.w3.org/2000/svg" class="d-block user-select-none" width="100%" height="200" aria-label="Placeholder: Image cap" focusable="false" role="img" preserveAspectRatio="xMidYMid slice" viewBox="0 0 318 180" style="font-size:1.125rem;text-anchor:middle">
+                                    <rect width="100%" height="100%" fill="#868e96"></rect>
+                                    <text x="50%" y="50%" fill="#dee2e6" dy=".3em">Pas d'image</text>
+                                </svg>
+                            {% endif %}
                         </div>
                         <h6 class="mt-1">
                             Catégorie : 
@@ -35,7 +42,7 @@
                         
                         <h6 class="mt-1">
                             Autheur :
-                            <span class="mb-1 text-secondary">{{ article_item.user.author}}</span>
+                            <span class="mb-1 text-secondary">{{ article_item.user.email}}</span>
                         </h6>
                         <h6 class="mt-1">
                             Date :

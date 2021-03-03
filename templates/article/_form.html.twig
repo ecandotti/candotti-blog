@@ -1,6 +1,17 @@
 {% if app.user and is_granted('ROLE_ADMIN') %}
     {{ form_start(form) }}
-        {{ form_widget(form) }}
+        {{ form_row(form.title) }}
+        {{ form_row(form.subtitle) }}
+        {{ form_row(form.readTime) }}
+        {{ form_row(form.content) }}
+        {% if article.image %}
+            <h6>Image postée :</h6>
+            <img src="{{ asset('/uploads/' ~ article.image.name) }}" class="img-fluid mb-2" width="200px" height="200px"/>
+        {% else %}
+            {{ form_row(form.image) }}
+        {% endif %}
+        {{ form_row(form.category) }}
+        {{ form_row(form.status) }}
     {{ form_end(form) }}
 {% endif %}
 
