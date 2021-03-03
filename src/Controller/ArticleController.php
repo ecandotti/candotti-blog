@@ -4,6 +4,7 @@ namespace App\Controller;
 
 use App\Entity\Article;
 use App\Entity\Comment;
+use App\Entity\Image;
 use App\Entity\Like;
 use App\Entity\Share;
 use App\Entity\User;
@@ -41,6 +42,21 @@ class ArticleController extends AbstractController
                 $len_content = strlen($form->getData()->getContent());
                 $article->setReadTime(round($len_content / 60));
             }
+
+            // Gestion de l'image
+            if ($form->get('image')->getData()) {
+                $image = $form->get('image')->getData();
+                $fichier = md5(uniqid()) . '.' . $image->guessExtension();
+                $image->move(
+                    $this->getParameter('images_directory'),
+                    $fichier
+                );
+
+                $img = new Image();
+                $img->setName($fichier);
+                $article->setImage($img);
+            }
+
             
             $article->setCreateAt(new DateTime());
             $article->setUser($this->getUser());
@@ -136,11 +152,27 @@ class ArticleController extends AbstractController
         $comments = $this->getDoctrine()->getRepository(Comment::class)->findBy([
             'article' => $article,
         ],['createAt' => 'desc']);
-
+        
         $form = $this->createForm(ArticleType::class, $article);
         $form->handleRequest($request);
 
+
         if ($form->isSubmitted() && $form->isValid()) {
+            
+            // Gestion de l'image
+            if ($article->getImage() == NULL) {
+                $image = $form->get('image')->getData();
+                $fichier = md5(uniqid()) . '.' . $image->guessExtension();
+                $image->move(
+                    $this->getParameter('images_directory'),
+                    $fichier
+                );
+
+                $img = new Image();
+                $img->setName($fichier);
+                $article->setImage($img);
+            }
+            
             $this->getDoctrine()->getManager()->flush();
 
             $this->addFlash('success', 'Article édité avec succès');
