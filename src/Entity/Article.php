@@ -67,19 +67,19 @@ class Article
     private $status;
 
     /**
-     * @ORM\OneToMany(targetEntity=Image::class, mappedBy="article")
-     */
-    private $images;
-
-    /**
-     * @ORM\OneToMany(targetEntity=Like::class, mappedBy="article")
+     * @ORM\OneToMany(targetEntity=Like::class, mappedBy="article", orphanRemoval=true)
      */
     private $likes;
 
     /**
-     * @ORM\OneToMany(targetEntity=Share::class, mappedBy="article")
+     * @ORM\OneToMany(targetEntity=Share::class, mappedBy="article", orphanRemoval=true)
      */
     private $shares;
+
+    /**
+     * @ORM\OneToOne(targetEntity=Image::class, mappedBy="article", cascade={"persist"}, orphanRemoval=true)
+     */
+    private $image;
 
     public function __construct()
     {
@@ -221,36 +221,6 @@ class Article
     }
 
     /**
-     * @return Collection|Image[]
-     */
-    public function getImages(): Collection
-    {
-        return $this->images;
-    }
-
-    public function addImage(Image $image): self
-    {
-        if (!$this->images->contains($image)) {
-            $this->images[] = $image;
-            $image->setArticle($this);
-        }
-
-        return $this;
-    }
-
-    public function removeImage(Image $image): self
-    {
-        if ($this->images->removeElement($image)) {
-            // set the owning side to null (unless already changed)
-            if ($image->getArticle() === $this) {
-                $image->setArticle(null);
-            }
-        }
-
-        return $this;
-    }
-
-    /**
      * @return Collection|Like[]
      */
     public function getLikes(): Collection
@@ -306,6 +276,28 @@ class Article
                 $share->setArticle(null);
             }
         }
+
+        return $this;
+    }
+
+    public function getImage(): ?Image
+    {
+        return $this->image;
+    }
+
+    public function setImage(?Image $image): self
+    {
+        // unset the owning side of the relation if necessary
+        if ($image === null && $this->image !== null) {
+            $this->image->setArticle(null);
+        }
+
+        // set the owning side of the relation if necessary
+        if ($image !== null && $image->getArticle() !== $this) {
+            $image->setArticle($this);
+        }
+
+        $this->image = $image;
 
         return $this;
     }
