@@ -28,8 +28,9 @@ To Do :
 [X] Nombre de like        
 [X] delete author variable        
 [X] Fix like / share double      
-[_] Ajouter une image  
+[X] Ajouter une image  
 [_] Forgot pass        
-[_] Trier    
+[_] Search bar    
+[_] Date de publication programmable    
 [_] Filtration    
 [_] Action de masse    
