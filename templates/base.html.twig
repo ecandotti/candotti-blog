@@ -79,7 +79,7 @@
                         </div>
                     </div>
                     <div class="card-footer text-muted">
-                        Le {{ article.createAt|date('d-m-Y') }} par <b>{{ article.user.email}}</b>.
+                        Le {{ article.createAt|date('d/m/Y h:m:s') }} par <b>{{ article.user.email}}</b>.
                     </div>
                 </div>
             {% else %}

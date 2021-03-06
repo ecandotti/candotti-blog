@@ -4,6 +4,7 @@ namespace App\Controller;
 
 use App\Entity\Article;
 use App\Entity\Comment;
+use Doctrine\ORM\EntityManagerInterface;
 use Knp\Component\Pager\PaginatorInterface;
 use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
 use Symfony\Component\HttpFoundation\Response;
@@ -47,13 +48,10 @@ class AdminController extends AbstractController
     /**
      * @Route("/manage/article", name="admin_manage_article")
      */
-    public function adminManageArticle(request $request, PaginatorInterface $paginator): Response
+    public function adminManageArticle(request $request, PaginatorInterface $paginator, EntityManagerInterface $em): Response
     {
-        $articles = $this->getDoctrine()->getRepository(Article::class)->findBy([
-            'user' => $this->getUser()
-        ],
-            ['createAt' => 'DESC']
-        );
+        $dql = "SELECT a FROM App:Article a";
+        $articles = $em->createQuery($dql);
 
         $articles = $paginator->paginate(
             $articles, // Requête contenant les données à paginer
@@ -69,18 +67,17 @@ class AdminController extends AbstractController
     /**
      * @Route("/manage/comment", name="admin_manage_comment", methods={"GET"})
      */
-    public function adminManageComment(request $request, PaginatorInterface $paginator): Response
-    {
-        $comments = $this->getDoctrine()->getRepository(Comment::class)->findBy([],
-            ['createAt' => 'DESC']
-        );
-
+    public function adminManageComment(request $request, PaginatorInterface $paginator, EntityManagerInterface $em): Response
+    {   
+        $dql = "SELECT c FROM App:Comment c";
+        $comments = $em->createQuery($dql);
+        
         $comments = $paginator->paginate(
             $comments, // Requête contenant les données à paginer
             $request->query->getInt('page', 1), // Numéro de la page en cours, passé dans l'URL, 1 si aucune page
             10 // Nombre de résultats par page
         );
-
+        
         return $this->render('admin/manage-comments.html.twig', [
             'comments' => $comments,
         ]);

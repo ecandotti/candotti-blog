@@ -5,7 +5,7 @@
 {% block body %}
     {% for messages in app.flashes('msg') %}
     <div class="alert alert-dismissible alert-warning" >
-        <a class="text-decoration-none text-reset" href="{{ path('admin_manage_comment') }}">
+        <a class="text-decoration-none text-reset" href="{{ path('admin_manage_comment', { sort: 'c.status', direction: 'desc', page: 1 }) }}">
             <button type="button" class="close" data-dismiss="alert" tabindex="0">&times;</button>
             {{ messages }}
         </a>

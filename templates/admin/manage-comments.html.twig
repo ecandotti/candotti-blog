@@ -12,21 +12,32 @@
     <h1 class="text-center mb-4">Gérer les commentaires</h1>
 
     {% include "admin/_menu.html.twig" %}
-
+    
     <table class="table table-striped">
         <thead>
             <tr>
-                <th scope="col">Article</th>
+                <th>
+                    {{ knp_pagination_sortable(comments, 'Titre', 'c.id') }}
+                </th>
                 <th scope="col">Commentaire</th>
-                <th scope="col">Satuts</th>
+                <th scope="col">
+                    {{ knp_pagination_sortable(comments, 'Date', 'c.createAt') }}
+                </th>
+                <th scope="col">
+                    {{ knp_pagination_sortable(comments, 'Statut', 'c.status') }}
                 <th scope="col">Actions</th>
             </tr>
         </thead>
         <tbody>
             {% for comment in comments %}
                 <tr>
-                    <th scope="row">{{ comment.article.title }}</th>
+                    <th scope="row">
+                        <a href="{{ path('article_show', {id: comment.article.id }) }}" class="text-decoration-none text-body">
+                            {{ comment.article.title }}
+                        </a>
+                    </th>
                     <td>{{ comment.content }}</td>
+                    <td>{{ comment.createAt|date('d/m/Y h:m:s') }}</td>
                     <td>
                         {% if comment.status == "W" %}
                             <span class="badge badge-pill badge-warning">En attente</span>
@@ -39,7 +50,7 @@
                         {% endif %}
                     </td>
                     <td>
-                        <div class="d-flex">
+                        <div class="d-flex flex-column flex-md-row">
                             <a href="{{ path('comment_action', {'status': 'V', 'commentId': comment.id}) }}" class="btn btn-success mr-2 mb-2">Approuvé</a>
                             <a href="{{ path('comment_action', {'status': 'R', 'commentId': comment.id}) }}" class="btn btn-danger mr-2 mb-2">Non approuvé</a>
                         </div>

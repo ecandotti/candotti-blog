@@ -17,8 +17,10 @@
         <table class="table table-striped">
             <thead>
                 <tr>
-                    <th scope="col">Article</th>
-                    <th scope="col">Satuts</th>
+                    <th scope="col">{{ knp_pagination_sortable(articles, 'Titre', 'a.title') }}</th>
+                    <th scope="col">{{ knp_pagination_sortable(articles, 'Autheur', 'u.firstName') }}</th>
+                    <th scope="col">{{ knp_pagination_sortable(articles, 'Date', 'a.createAt') }}</th>
+                    <th scope="col">{{ knp_pagination_sortable(articles, 'Status', 'a.status') }}</th>
                     <th scope="col">Actions</th>
                 </tr>
             </thead>
@@ -26,6 +28,8 @@
                 {% for article in articles %}
                     <tr>
                         <th scope="row">{{ article.title }}</th>
+                        <th scope="row">{{ article.user.firstName }} {{ article.user.lastName }}</th>
+                        <th scope="row">{{ article.createAt|date('d/m/Y h:m:s') }}</th>
                         <td>
                             {% if article.status == "P" %}
                                 <span class="badge badge-pill badge-success">Publié</span>
@@ -35,7 +39,7 @@
                             {% endif %}
                         </td>
                         <td>
-                            <div class="d-flex">
+                            <div class="d-flex flex-column flex-md-row">
                                 <a href="{{ path('article_edit', {'id': article.id}) }}" class="btn btn-warning mr-2 mb-2">Modifier</a>
                                 {{ include('article/_delete_form.html.twig') }}
                             </div>
