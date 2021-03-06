@@ -13,55 +13,64 @@
 
     {% include "admin/_menu.html.twig" %}
     
-    <table class="table table-striped">
-        <thead>
-            <tr>
-                <th>
-                    {{ knp_pagination_sortable(comments, 'Titre', 'c.id') }}
-                </th>
-                <th scope="col">Commentaire</th>
-                <th scope="col">
-                    {{ knp_pagination_sortable(comments, 'Date', 'c.createAt') }}
-                </th>
-                <th scope="col">
-                    {{ knp_pagination_sortable(comments, 'Statut', 'c.status') }}
-                <th scope="col">Actions</th>
-            </tr>
-        </thead>
-        <tbody>
-            {% for comment in comments %}
+    {{ form_start(form) }}
+        {{ form_row(form.nameFilter) }}
+        {{ form_row(form.send) }}
+    {{ form_end(form) }}
+    {% if comments is not empty %}
+        <table class="table table-striped">
+            <thead>
                 <tr>
-                    <th scope="row">
-                        <a href="{{ path('article_show', {id: comment.article.id }) }}" class="text-decoration-none text-body">
-                            {{ comment.article.title }}
-                        </a>
+                    <th>
+                        {{ knp_pagination_sortable(comments, 'Titre', 'c.id') }}
                     </th>
-                    <td>{{ comment.content }}</td>
-                    <td>{{ comment.createAt|date('d/m/Y h:m:s') }}</td>
-                    <td>
-                        {% if comment.status == "W" %}
-                            <span class="badge badge-pill badge-warning">En attente</span>
-                        {% endif %}
-                        {% if comment.status == "V" %}
-                            <span class="badge badge-pill badge-success">Approuvé</span>
-                        {% endif %}
-                        {% if comment.status == "R" %}
-                            <span class="badge badge-pill badge-danger">Non approuvé</span>
-                        {% endif %}
-                    </td>
-                    <td>
-                        <div class="d-flex flex-column flex-md-row">
-                            <a href="{{ path('comment_action', {'status': 'V', 'commentId': comment.id}) }}" class="btn btn-success mr-2 mb-2">Approuvé</a>
-                            <a href="{{ path('comment_action', {'status': 'R', 'commentId': comment.id}) }}" class="btn btn-danger mr-2 mb-2">Non approuvé</a>
-                        </div>
-                    </td>
+                    <th scope="col">Commentaire</th>
+                    <th scope="col">
+                        {{ knp_pagination_sortable(comments, 'Date', 'c.createAt') }}
+                    </th>
+                    <th scope="col">
+                        {{ knp_pagination_sortable(comments, 'Statut', 'c.status') }}
+                    <th scope="col">Actions</th>
                 </tr>
-            {% endfor %}
-        </tbody>
-    </table>
+            </thead>
+            <tbody>
+                {% for comment in comments %}
+                    <tr>
+                        <th scope="row">
+                            <a href="{{ path('article_show', {id: comment.article.id }) }}" class="text-decoration-none text-body">
+                                {{ comment.article.title }}
+                        </th>
+                        <td>{{ comment.content }}</td>
+                        <td>{{ comment.createAt|date('d/m/Y h:m:s') }}</td>
+                        <td>
+                            {% if comment.status == "W" %}
+                                <span class="badge badge-pill badge-warning">En attente</span>
+                            {% endif %}
+                            {% if comment.status == "V" %}
+                                <span class="badge badge-pill badge-success">Approuvé</span>
+                            {% endif %}
+                            {% if comment.status == "R" %}
+                                <span class="badge badge-pill badge-danger">Non approuvé</span>
+                            {% endif %}
+                        </td>
+                        <td>
+                            <div class="d-flex flex-column flex-md-row">
+                                <a href="{{ path('comment_action', {'status': 'V', 'commentId': comment.id}) }}" class="btn btn-success mr-2 mb-2">Approuvé</a>
+                                <a href="{{ path('comment_action', {'status': 'R', 'commentId': comment.id}) }}" class="btn btn-danger mr-2 mb-2">Non approuvé</a>
+                            </div>
+                        </td>
+                    </tr>
+                {% endfor %}
+            </tbody>
+        </table>
 
-    <div class="text-center">
-        {{ knp_pagination_render(comments) }}
-    </div>
+        <div class="text-center d-flex justify-content-cente">
+            {{ knp_pagination_render(comments) }}
+        </div>
+    {% else %}
+        <div class="text-center my-4 border p-4 text-muted">
+            Aucun commentaire à gérer
+        </div>
+    {% endif %}
 
 {% endblock %}

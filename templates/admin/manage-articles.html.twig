@@ -9,10 +9,14 @@
             {{ messages }}
         </div>
     {% endfor %}
-    <h1 class="text-center mb-4">Gérer mes articles</h1>
+    <h1 class="text-center mb-4">Gérer les articles</h1>
 
     {% include "admin/_menu.html.twig" %}
 
+    {{ form_start(form) }}
+        {{ form_row(form.nameFilter) }}
+        {{ form_row(form.send) }}
+    {{ form_end(form) }}
     {% if articles is not empty %}
         <table class="table table-striped">
             <thead>
@@ -48,7 +52,7 @@
                 {% endfor %}
             </tbody>
         </table>
-        <div class="text-center">
+        <div class="text-center d-flex justify-content-center">
             {{ knp_pagination_render(articles) }}
         </div>
     {% else %}
