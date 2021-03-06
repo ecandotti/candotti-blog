@@ -30,9 +30,9 @@ To Do :
 [X] Fix like / share double      
 [X] Ajouter une image  
 [X] Cancel function in edit mode   
-[_] Forgot pass        
+[X] Filtration (visible / non visible / none)   
+[X] Trier (autheur, titre, date=default)   
 [_] Search bar    
 [_] Date de publication programmable    
-[_] Trier (autheur, titre, date=default)   
-[_] Filtration (visible / non visible / none)   
 [_] Action de masse    
+[_] Forgot pass        
