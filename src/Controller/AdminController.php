@@ -4,6 +4,8 @@ namespace App\Controller;
 
 use App\Entity\Article;
 use App\Entity\Comment;
+use App\Form\FilterArticleType;
+use App\Form\FilterCommentType;
 use Doctrine\ORM\EntityManagerInterface;
 use Knp\Component\Pager\PaginatorInterface;
 use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
@@ -50,8 +52,19 @@ class AdminController extends AbstractController
      */
     public function adminManageArticle(request $request, PaginatorInterface $paginator, EntityManagerInterface $em): Response
     {
-        $dql = "SELECT a FROM App:Article a";
-        $articles = $em->createQuery($dql);
+        $form = $this->createForm(FilterArticleType::class);
+        $form->handleRequest($request);
+
+        if (!empty($form->get('nameFilter')->getData())) {
+            $statut = $form->get('nameFilter')->getData();
+            $dql = "SELECT a FROM App:Article a WHERE a.status = :statut";
+            $articles = $em->createQuery($dql);
+            $articles->setParameter('statut', (string) $statut);
+        } else {
+            $dql = "SELECT a FROM App:Article a";
+            $articles = $em->createQuery($dql);
+        }
+        // dd($articles);
 
         $articles = $paginator->paginate(
             $articles, // Requête contenant les données à paginer
@@ -60,17 +73,27 @@ class AdminController extends AbstractController
         );
 
         return $this->render('admin/manage-articles.html.twig', [
+            'form' => $form->createView(),
             'articles' => $articles,
         ]);
     }
 
     /**
-     * @Route("/manage/comment", name="admin_manage_comment", methods={"GET"})
+     * @Route("/manage/comment", name="admin_manage_comment", methods={"GET","POST"})
      */
     public function adminManageComment(request $request, PaginatorInterface $paginator, EntityManagerInterface $em): Response
     {   
-        $dql = "SELECT c FROM App:Comment c";
-        $comments = $em->createQuery($dql);
+        $form = $this->createForm(FilterCommentType::class);
+        $form->handleRequest($request);
+
+        if (!empty($form->get('nameFilter')->getData())) {
+            $statut = $form->get('nameFilter')->getData();
+            $comments = $em->getRepository(Comment::class)->findBy([
+                'status' => $statut
+            ]);
+        } else {
+            $comments = $em->getRepository(Comment::class)->findBy([]);
+        }
         
         $comments = $paginator->paginate(
             $comments, // Requête contenant les données à paginer
@@ -79,6 +102,7 @@ class AdminController extends AbstractController
         );
         
         return $this->render('admin/manage-comments.html.twig', [
+            'form' => $form->createView(),
             'comments' => $comments,
         ]);
     }
