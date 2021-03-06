@@ -29,8 +29,10 @@ To Do :
 [X] delete author variable        
 [X] Fix like / share double      
 [X] Ajouter une image  
+[X] Cancel function in edit mode   
 [_] Forgot pass        
 [_] Search bar    
 [_] Date de publication programmable    
-[_] Filtration    
+[_] Trier (autheur, titre, date=default)   
+[_] Filtration (visible / non visible / none)   
 [_] Action de masse    
