@@ -29,7 +29,7 @@
                 <p class="card-text">{{ like.article.content|slice(0,20) ~ '...' }}</p>
             </div>
             <div class="card-footer text-muted">
-                Le {{ like.article.createAt ? like.article.createAt|date('d-m-Y') : '' }} par {{ like.article.user.author}}.
+                Le {{ like.article.createAt|date('d-m-Y H:i:s') }} par <b>{{ like.article.user.email }}</b>.
             </div>
         </div>
     {% else %}

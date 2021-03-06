@@ -34,11 +34,11 @@
                 <h6>{{ comment.content }}</h6>
             </div>
             <div class="card-footer text-muted">
-                Le {{ comment.article.createAt ? comment.article.createAt|date('d-m-Y') : '' }} par {{ comment.article.user.author}}.
+                Le {{ comment.article.createAt|date('d-m-Y H:i:s') }} par <b>{{ comment.user.email }}</b>.
             </div>
         </div>
     {% else %}
-        <h6>Aucun article disponible :(</h6>
+        <h6 class="my-2">Aucun article commenté :(</h6>
     {% endfor %}
     <div class="text-center d-flex justify-content-center">
         {{ knp_pagination_render(articles) }}

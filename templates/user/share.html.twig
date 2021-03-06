@@ -29,11 +29,11 @@
                 <p class="card-text">{{ share.article.content|slice(0,20) ~ '...' }}</p>
             </div>
             <div class="card-footer text-muted">
-                Le {{ share.article.createAt ? share.article.createAt|date('d-m-Y') : '' }} par {{ share.article.user.author}}.
+                Le {{ share.article.createAt|date('d-m-Y H:i:s') }} par <b>{{ share.article.user.email}}</b>.
             </div>
         </div>
     {% else %}
-        <h6>Aucun article disponible :(</h6>
+        <h6 class="my-2">Aucun article partagé :(</h6>
     {% endfor %}
     <div class="text-center d-flex justify-content-center">
         {{ knp_pagination_render(articles) }}

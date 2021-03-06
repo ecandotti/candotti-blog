@@ -22,7 +22,7 @@
     {% endif %}
 
     <h6 class="text-muted"><strong>Autheur :</strong> {{ article.user.email }}</h6>
-    <h6 class="text-muted"><strong>Date de création :</strong> {{ article.createAt|date('d/m/Y h:m:s') }}</h6>
+    <h6 class="text-muted"><strong>Date de création :</strong> {{ article.createAt|date('d-m-Y H:i:s') }}</h6>
     <h6 class="text-muted"><strong>Temps de lecture :</strong> 
         <span>
             {% if article.readTime > 1 %}
