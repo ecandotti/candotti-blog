@@ -54,8 +54,8 @@ class ArticleType extends AbstractType
                     'Non Publié' => 'NP',
                 ]
             ])
-            ->add('poster', SubmitType::class, [
-                'label' => 'Poster',
+            ->add('valider', SubmitType::class, [
+                'label' => 'Valider',
                 'attr' => ['class' => 'btn-success']
             ])
         ;

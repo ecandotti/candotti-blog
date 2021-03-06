@@ -12,6 +12,8 @@
         {% endif %}
         {{ form_row(form.category) }}
         {{ form_row(form.status) }}
+            <a href="{{ path('admin_dashboard') }}" class="btn btn-warning my-2">Annuler</a>
+            {{ form_row(form.valider) }}
     {{ form_end(form) }}
 {% endif %}
 

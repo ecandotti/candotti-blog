@@ -160,7 +160,7 @@ class ArticleController extends AbstractController
         if ($form->isSubmitted() && $form->isValid()) {
             
             // Gestion de l'image
-            if ($article->getImage() == NULL) {
+            if ($article->getImage() == NULL && !empty($form->get('image')->getData())) {
                 $image = $form->get('image')->getData();
                 $fichier = md5(uniqid()) . '.' . $image->guessExtension();
                 $image->move(
