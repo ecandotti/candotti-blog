@@ -7,36 +7,38 @@
 
     {% include "user/_menu.html.twig" %}
 
-    {% for share in articles %}
-        <div class="card mb-3">
-            <div class="card-body">
-                <a href="{{ path('article_show', {'id': share.article.id}) }}" class="card-link" tabindex="0">
-                    <h2 class="card-title">{{ share.article.title }}</h2>
-                    <h6 class="text-muted">Catégorie : {{ share.article.category.name }}</h6>
-                </a>
-            </div>
-
-            {% if share.article.image %}
-                <img src="{{ asset('/uploads/' ~ article.image.name) }}" alt="" height="200"/>
-            {% else %}
-                <svg xmlns="http://www.w3.org/2000/svg" class="d-block user-select-none" width="100%" height="200" aria-label="Placeholder: Image cap" focusable="false" role="img" preserveAspectRatio="xMidYMid slice" viewBox="0 0 318 180" style="font-size:1.125rem;text-anchor:middle">
-                    <rect width="100%" height="100%" fill="#868e96"></rect>
-                    <text x="50%" y="50%" fill="#dee2e6" dy=".3em">Pas d'image</text>
-                </svg>
-            {% endif %}
-
-            <div class="card-body">
-                <p class="card-text">{{ share.article.content|slice(0,20) ~ '...' }}</p>
-            </div>
-            <div class="card-footer text-muted">
-                Le {{ share.article.createAt|date('d-m-Y H:i:s') }} par <b>{{ share.article.user.email}}</b>.
-            </div>
+    {% if articles is not empty %}
+        <table class="table table-striped">
+            <thead>
+                <tr>
+                    <th scope="col">Image</th>
+                    <th scope="col">{{ knp_pagination_sortable(articles, 'Titre', 'a.title') }}</th>
+                    <th scope="col">{{ knp_pagination_sortable(articles, 'Autheur', 'a.author') }}</th>
+                    <th scope="col">Catégorie</th>
+                    <th scope="col">Contenu</th>
+                    <th scope="col">{{ knp_pagination_sortable(articles, 'Date', 'a.createAt') }}</th>
+                </tr>
+            </thead>
+            <tbody>
+                {% for share in articles %}
+                    <tr>
+                        <th scope="row">img</th>
+                        <th scope="row"><a href="{{ path('article_show', { id: share.article.id }) }}">{{ share.article.title }}</th>
+                        <th scope="row">{{ share.user.firstName }} {{ share.user.lastName }}</th>
+                        <th scope="row">{{ share.article.category.name }}</th>
+                        <th scope="row">{{ share.article.content|slice(0,10) ~ '...' }}</th>
+                        <th scope="row">{{ share.article.createAt|date('d/m/Y') }}</th>
+                    </tr>
+                {% endfor %}
+            </tbody>
+        </table>
+        <div class="text-center d-flex justify-content-center">
+            {{ knp_pagination_render(articles) }}
         </div>
     {% else %}
-        <h6 class="my-2">Aucun article partagé :(</h6>
-    {% endfor %}
-    <div class="text-center d-flex justify-content-center">
-        {{ knp_pagination_render(articles) }}
-    </div>
+        <div class="text-center my-4 border p-4 text-muted">
+            Aucun article partagé :(
+        </div>
+    {% endif %}
 
 {% endblock %}

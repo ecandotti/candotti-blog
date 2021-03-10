@@ -8,16 +8,16 @@
             <div class="mb-1 text-secondary">{{ comment.content }}</div>
             {% if comment.status == "W" %}
                 <span class="badge badge-pill badge-warning">En attente</span>
-                <a href="{{ path('comment_action', {'status': 'R', 'commentId': comment.id }) }}"class="btn btn-danger">Non approuvé</a>
-                <a href="{{ path('comment_action', {'status': 'V', 'commentId': comment.id }) }}"class="btn btn-success">Approuvé</a>
+                <a href="{{ path('comment_action', {'status': 'R', 'commentId': comment.id }) }}"class="btn btn-danger"><i class="fas fa-thumbs-down"></i></a>
+                <a href="{{ path('comment_action', {'status': 'V', 'commentId': comment.id }) }}"class="btn btn-success"><i class="fas fa-thumbs-up"></i></a>
             {% endif %}
             {% if comment.status == "V" %}
                 <span class="badge badge-pill badge-success">Approuvé</span>
-                <a href="{{ path('comment_action', {'status': 'R', 'commentId': comment.id }) }}"class="btn btn-danger">Non approuvé</a>
+                <a href="{{ path('comment_action', {'status': 'R', 'commentId': comment.id }) }}"class="btn btn-danger"><i class="fas fa-thumbs-down"></i></a>
             {% endif %}
             {% if comment.status == "R" %}
                 <span class="badge badge-pill badge-danger">Non approuvé</span>
-                <a href="{{ path('comment_action', {'status': 'V', 'commentId': comment.id }) }}"class="btn btn-success">Approuvé</a>
+                <a href="{{ path('comment_action', {'status': 'V', 'commentId': comment.id }) }}"class="btn btn-success"><i class="fas fa-thumbs-up"></i></a>
             {% endif %}
         </div>
     {% endfor %}

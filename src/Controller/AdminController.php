@@ -48,9 +48,46 @@ class AdminController extends AbstractController
     }
 
     /**
+     * @Route("/manage/article/multiDelete", name="multi_del_article")
+     */
+    public function multiDeleteArticle(Request $request, EntityManagerInterface $em): Response
+    {
+        $result = $request->request->all();
+        foreach ($result as $key => $value) {
+            $article = $em->getRepository(Article::class)->findOneBy([
+                'id' => $key
+            ]);
+            $em->remove($article);
+        }
+        $em->flush();
+        $this->addFlash('success','Articles selectionnés supprimés');
+        return $this->redirectToRoute('admin_manage_article');
+    }
+
+    /**
+     * @Route("/manage/comment/multiMove", name="multi_move_comment")
+     */
+    public function multiDeleteCommentary(Request $request, EntityManagerInterface $em): Response
+    {
+        $result = $request->request->all();
+        $action = $result['actionMass'];
+        unset($result["actionMass"]);
+        foreach ($result as $key => $value) {
+            $comment = $em->getRepository(Comment::class)->findOneBy([
+                "article" => $key
+            ]);
+            $comment->setStatus($action);
+        }
+        $em->flush();
+
+        $this->addFlash('success','Commentaires selectionnés modifié !');
+        return $this->redirectToRoute('admin_manage_comment');
+    }
+
+    /**
      * @Route("/manage/article", name="admin_manage_article")
      */
-    public function adminManageArticle(request $request, PaginatorInterface $paginator, EntityManagerInterface $em): Response
+    public function adminManageArticle(Request $request, PaginatorInterface $paginator, EntityManagerInterface $em): Response
     {
         $form = $this->createForm(FilterArticleType::class);
         $form->handleRequest($request);

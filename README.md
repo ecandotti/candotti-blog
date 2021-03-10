@@ -25,14 +25,15 @@ To Do :
 [X] Afficher 5 derniers article aimé  
 [X] Afficher 5 derniers article partagé  
 [X] Liker  
-[X] Nombre de like        
+[X] Nombre de likes        
 [X] delete author variable        
 [X] Fix like / share double      
 [X] Ajouter une image  
 [X] Cancel function in edit mode   
 [X] Filtration (visible / non visible / none)   
-[X] Trier (autheur, titre, date=default)   
+[X] Action de masse    
+[_] Trier (autheur, titre, date=default)   
+[_] Trier (autheur, titre, date=default) pour User   
 [_] Search bar    
 [_] Date de publication programmable    
-[_] Action de masse    
 [_] Forgot pass        

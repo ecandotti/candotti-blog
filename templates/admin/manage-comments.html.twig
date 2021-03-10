@@ -18,9 +18,19 @@
         {{ form_row(form.send) }}
     {{ form_end(form) }}
     {% if comments is not empty %}
+    <form action={{ path('multi_move_comment') }} method="POST">
+        <div class="mb-2">
+            Action de masse : 
+            <select name="actionMass">
+                <option value="V">Approuvé</option>
+                <option value="R">Non approuvé</option>
+            </select>
+            <input type="submit" value="Appliquer" class="btn btn-info">
+        </div>
         <table class="table table-striped">
             <thead>
                 <tr>
+                    <th> </th>
                     <th>
                         {{ knp_pagination_sortable(comments, 'Titre', 'c.id') }}
                     </th>
@@ -36,6 +46,7 @@
             <tbody>
                 {% for comment in comments %}
                     <tr>
+                        <th><input type="checkbox" name="{{ comment.article.id }}" value="article_id"></th>
                         <th scope="row">
                             <a href="{{ path('article_show', {id: comment.article.id }) }}" class="text-decoration-none text-body">
                                 {{ comment.article.title }}
@@ -55,8 +66,8 @@
                         </td>
                         <td>
                             <div class="d-flex flex-column flex-md-row">
-                                <a href="{{ path('comment_action', {'status': 'V', 'commentId': comment.id}) }}" class="btn btn-success mr-2 mb-2">Approuvé</a>
-                                <a href="{{ path('comment_action', {'status': 'R', 'commentId': comment.id}) }}" class="btn btn-danger mr-2 mb-2">Non approuvé</a>
+                                <a href="{{ path('comment_action', {'status': 'V', 'commentId': comment.id}) }}" class="btn btn-success mr-2 mb-2"><i class="fas fa-thumbs-up"></i></a>
+                                <a href="{{ path('comment_action', {'status': 'R', 'commentId': comment.id}) }}" class="btn btn-danger mr-2 mb-2"><i class="fas fa-thumbs-down"></i></a>
                             </div>
                         </td>
                     </tr>

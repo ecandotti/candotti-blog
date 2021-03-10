@@ -119,7 +119,7 @@ class UserController extends AbstractController
     {
         $articles_like = $this->getDoctrine()->getRepository(Like::class)->findBy([
             'user' => $this->getUser()
-        ],['createAt' => 'DESC']);
+        ]);
 
         $articles = $paginator->paginate(
             $articles_like, // Requête contenant les données à paginer
