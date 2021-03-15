@@ -36,4 +36,3 @@ To Do :
 [_] Trier (autheur, titre, date=default) pour User   
 [_] Search bar    
 [_] Date de publication programmable    
-[_] Forgot pass        
