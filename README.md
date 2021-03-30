@@ -35,6 +35,7 @@ To Do :
 [X] CKEditor  
 [X] Mot de passe oublié  
 [X] Changer son mot de passe  
+[X] Mise en place d'un captcha  
 [_] Trier (autheur, titre, date=default)   
 [_] Trier (autheur, titre, date=default) pour User   
 [_] Search bar    
