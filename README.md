@@ -39,4 +39,5 @@ To Do :
 [_] Trier (autheur, titre, date=default)   
 [_] Trier (autheur, titre, date=default) pour User   
 [_] Search bar    
+[_] Consent Cookie    
 [_] Date de publication programmable    
