@@ -25,7 +25,7 @@
                         <th scope="row">img</th>
                         <th scope="row"><a href="{{ path('article_show', { id: share.article.id }) }}">{{ share.article.title }}</th>
                         <th scope="row">{{ share.user.firstName }} {{ share.user.lastName }}</th>
-                        <th scope="row">{{ share.article.category.name }}</th>
+                        <th scope="row">{{ share.article.category }}</th>
                         <th scope="row">{{ share.article.content|slice(0,10) ~ '...' }}</th>
                         <th scope="row">{{ share.article.createAt|date('d/m/Y') }}</th>
                     </tr>
