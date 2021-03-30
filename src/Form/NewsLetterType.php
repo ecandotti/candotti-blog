@@ -3,6 +3,7 @@
 namespace App\Form;
 
 use App\Entity\NewsLetter;
+use Gregwar\CaptchaBundle\Type\CaptchaType;
 use Symfony\Component\Form\AbstractType;
 use Symfony\Component\Form\Extension\Core\Type\EmailType;
 use Symfony\Component\Form\FormBuilderInterface;
@@ -15,6 +16,10 @@ class NewsLetterType extends AbstractType
         $builder
             ->add('email', EmailType::class, [
                 'required' => true,
+            ])
+            ->add('captcha', CaptchaType::class, [
+                'label' => 'Captcha*',
+                'attr' => ['class' => 'ml-2']
             ])
         ;
     }

@@ -2,6 +2,7 @@
 
 namespace App\Form;
 
+use Gregwar\CaptchaBundle\Type\CaptchaType;
 use Symfony\Component\Form\AbstractType;
 use Symfony\Component\Form\Extension\Core\Type\PasswordType;
 use Symfony\Component\Form\Extension\Core\Type\RepeatedType;
@@ -25,6 +26,10 @@ class ChangePwdType extends AbstractType
                 'required' => true,
                 'first_options'  => ['label' => 'Nouveau mot de passe'],
                 'second_options' => ['label' => 'Confirmer votre nouveau mot de passe'],
+            ])
+            ->add('captcha', CaptchaType::class, [
+                'label' => 'Captcha*',
+                'attr' => ['class' => 'ml-2']
             ])
             ->add('save', SubmitType::class, [
                 'label' => 'Enregistrer',

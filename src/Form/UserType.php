@@ -3,6 +3,7 @@
 namespace App\Form;
 
 use App\Entity\User;
+use Gregwar\CaptchaBundle\Type\CaptchaType;
 use Symfony\Component\Form\AbstractType;
 use Symfony\Component\Form\Extension\Core\Type\EmailType;
 use Symfony\Component\Form\Extension\Core\Type\SubmitType;
@@ -31,6 +32,10 @@ class UserType extends AbstractType
             ->add('phone', TelType::class, [
                 'required' => true,
                 'label' => 'Téléphone',
+            ])
+            ->add('captcha', CaptchaType::class, [
+                'label' => 'Captcha*',
+                'attr' => ['class' => 'ml-2']
             ])
             ->add('save', SubmitType::class, [
                 'label' => 'Enregistrer',

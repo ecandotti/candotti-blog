@@ -3,6 +3,7 @@
 namespace App\Form;
 
 use App\Entity\Contact;
+use Gregwar\CaptchaBundle\Type\CaptchaType;
 use Symfony\Component\Form\AbstractType;
 use Symfony\Component\Form\Extension\Core\Type\EmailType;
 use Symfony\Component\Form\Extension\Core\Type\TelType;
@@ -27,6 +28,10 @@ class ContactType extends AbstractType
             ->add('email', EmailType::class, [
                 'required' => true,
                 'label' => 'Email',
+            ])
+            ->add('captcha', CaptchaType::class, [
+                'label' => 'Captcha*',
+                'attr' => ['class' => 'ml-2']
             ])
             ->add('phone', TelType::class, [
                 'required' => true,

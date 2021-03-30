@@ -3,6 +3,7 @@
 namespace App\Form;
 
 use App\Entity\User;
+use Gregwar\CaptchaBundle\Type\CaptchaType;
 use Symfony\Component\Form\AbstractType;
 use Symfony\Component\Form\Extension\Core\Type\EmailType;
 use Symfony\Component\Form\Extension\Core\Type\PasswordType;
@@ -28,6 +29,10 @@ class RegistrationFormType extends AbstractType
                 'required' => true,
                 'first_options'  => ['label' => 'Mot de passe'],
                 'second_options' => ['label' => 'Confirmer votre mot de passe'],
+            ])
+            ->add('captcha', CaptchaType::class, [
+                'label' => 'Captcha*',
+                'attr' => ['class' => 'ml-2']
             ])
             ->add('first_name', TextType::class, [
                 'required' => true,

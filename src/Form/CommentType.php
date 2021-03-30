@@ -3,6 +3,7 @@
 namespace App\Form;
 
 use App\Entity\Comment;
+use Gregwar\CaptchaBundle\Type\CaptchaType;
 use Symfony\Component\Form\AbstractType;
 use Symfony\Component\Form\Extension\Core\Type\SubmitType;
 use Symfony\Component\Form\Extension\Core\Type\TextareaType;
@@ -17,6 +18,10 @@ class CommentType extends AbstractType
             ->add('content', TextareaType::class, [
                 'required' => true,
                 'label' => 'Message :',
+            ])
+            ->add('captcha', CaptchaType::class, [
+                'label' => 'Captcha*',
+                'attr' => ['class' => 'ml-2']
             ])
             ->add('poster', SubmitType::class)
         ;
