@@ -1,0 +1,28 @@
+{% extends 'base.html.twig' %}
+
+{% block title %}Réinitialisez votre mot de passe | BasketNPronos{% endblock %}
+
+{% block body %}
+    {% for flashError in app.flashes('sended') %}
+        <div class="alert alert-success" role="alert">{{ flashError }}</div>
+    {% endfor %}
+    {% for flashError in app.flashes('reset_password_error') %}
+        <div class="alert alert-danger" role="alert">{{ flashError }}</div>
+    {% endfor %}
+    <h1>Réinitialisez votre mot de passe</h1>
+
+    <div class="mt-4">
+        {{ form_start(requestForm) }}
+            {{ form_row(requestForm.email) }}
+            {{ form_row(requestForm.captcha) }}
+            <div>
+                <small>
+                    Entrez votre adresse e-mail et nous vous enverrons un
+                    lien pour réinitialiser votre mot de passe.
+                </small>
+            </div>
+
+            <button class="btn btn-primary my-3">Envoyer un e-mail de réinitialisation du mot de passe</button>
+        {{ form_end(requestForm) }}
+    </div>
+{% endblock %}
