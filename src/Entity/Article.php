@@ -36,11 +36,6 @@ class Article
     private $readTime;
 
     /**
-     * @ORM\ManyToOne(targetEntity=Category::class, inversedBy="articles")
-     */
-    private $category;
-
-    /**
      * @ORM\Column(type="string", length=255)
      */
     private $title;
@@ -80,6 +75,11 @@ class Article
      * @ORM\OneToOne(targetEntity=Image::class, mappedBy="article", cascade={"persist"}, orphanRemoval=true)
      */
     private $image;
+
+    /**
+     * @ORM\Column(type="string", length=255)
+     */
+    private $category;
 
     public function __construct()
     {
@@ -126,18 +126,6 @@ class Article
     public function setReadTime(int $readTime): self
     {
         $this->readTime = $readTime;
-
-        return $this;
-    }
-
-    public function getCategory(): ?Category
-    {
-        return $this->category;
-    }
-
-    public function setCategory(?Category $category): self
-    {
-        $this->category = $category;
 
         return $this;
     }
@@ -298,6 +286,18 @@ class Article
         }
 
         $this->image = $image;
+
+        return $this;
+    }
+
+    public function getCategory(): ?string
+    {
+        return $this->category;
+    }
+
+    public function setCategory(string $category): self
+    {
+        $this->category = $category;
 
         return $this;
     }
