@@ -3,14 +3,12 @@
 namespace App\Form;
 
 use App\Entity\Article;
-use App\Entity\Category;
-use Symfony\Bridge\Doctrine\Form\Type\EntityType;
+use FOS\CKEditorBundle\Form\Type\CKEditorType;
 use Symfony\Component\Form\AbstractType;
 use Symfony\Component\Form\Extension\Core\Type\ChoiceType;
 use Symfony\Component\Form\Extension\Core\Type\FileType;
 use Symfony\Component\Form\Extension\Core\Type\NumberType;
 use Symfony\Component\Form\Extension\Core\Type\SubmitType;
-use Symfony\Component\Form\Extension\Core\Type\TextareaType;
 use Symfony\Component\Form\Extension\Core\Type\TextType;
 use Symfony\Component\Form\FormBuilderInterface;
 use Symfony\Component\OptionsResolver\OptionsResolver;
@@ -32,7 +30,7 @@ class ArticleType extends AbstractType
                 'required' => false,
                 'label' => 'Temps de lecture',
             ])
-            ->add('content', TextareaType::class, [
+            ->add('content', CKEditorType::class, [
                 'required' => true,
                 'label' => 'Contenu',
             ])
@@ -41,10 +39,14 @@ class ArticleType extends AbstractType
                 'mapped' => false,
                 'label' => 'Upload une image',
             ])
-            ->add('category', EntityType::class, [
-                'class' => Category::class,
-                'choice_label' => 'name',
-                'label' => 'Catégorie'
+            ->add('category', ChoiceType::class, [
+                'required' => true,
+                'label' => 'Categorie',
+                'choices' => [
+                    'Humour' => 'humor',
+                    'Fantaisie' => 'fancy',
+                    'Politique' => 'politics',
+                ]
             ])
             ->add('status', ChoiceType::class, [
                 'required' => true,
