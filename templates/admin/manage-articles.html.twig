@@ -9,6 +9,12 @@
             {{ messages }}
         </div>
     {% endfor %}
+    {% for messages in app.flashes('error') %}
+        <div class="alert alert-dismissible alert-danger">
+            <button type="button" class="close" data-dismiss="alert" tabindex="0">&times;</button>
+            {{ messages }}
+        </div>
+    {% endfor %}
     <h1 class="text-center mb-4">Gérer les articles</h1>
 
     {% include "admin/_menu.html.twig" %}
