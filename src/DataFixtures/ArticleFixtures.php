@@ -15,7 +15,7 @@ class ArticleFixtures extends Fixture implements DependentFixtureInterface
         for ($i=1; $i < 31; $i++) {
             $article = new Article();
             $article
-                ->setCategory($this->getReference('category_'.rand(1,3)))
+                ->setCategory('humor')
                 ->setUser($this->getReference('simple-user'))
                 ->setTitle('I\'m the title n°'. $i)
                 ->setSubtitle('Hi \'m the subtitle')
@@ -44,7 +44,6 @@ Proin vulputate iaculis lacus, ac tincidunt ex euismod id. Phasellus risus lacus
     public function getDependencies()
     {
         return array(
-            CategoryFixtures::class,
             UserFixtures::class,
         );
     }

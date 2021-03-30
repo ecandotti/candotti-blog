@@ -24,7 +24,7 @@ class UserFixtures extends Fixture
             ->setFirstName('Barry')
             ->setLastName('Alen')
             ->setPhone('+33 123456789')
-            ->setEmail('user@candotti-blog.com')
+            ->setEmail('enzo.candotti16@hotmail.fr')
             ->setPassword($this->encoder->encodePassword($user, 'password'))
             ->setRoles(['ROLE_USER'])
         ;
