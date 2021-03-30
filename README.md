@@ -32,6 +32,9 @@ To Do :
 [X] Cancel function in edit mode   
 [X] Filtration (visible / non visible / none)   
 [X] Action de masse    
+[X] CKEditor  
+[X] Mot de passe oublié  
+[X] Changer son mot de passe  
 [_] Trier (autheur, titre, date=default)   
 [_] Trier (autheur, titre, date=default) pour User   
 [_] Search bar    
