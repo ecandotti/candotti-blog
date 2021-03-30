@@ -14,8 +14,6 @@ use Symfony\Component\Routing\Annotation\Route;
 use Sensio\Bundle\FrameworkExtraBundle\Configuration\IsGranted;
 use Symfony\Component\HttpFoundation\Request;
 
-use function Symfony\Component\DependencyInjection\Loader\Configurator\ref;
-
 /**
  * Require ROLE_ADMIN for *every* controller method in this class.
  * @Route("/admin")
@@ -53,6 +51,11 @@ class AdminController extends AbstractController
     public function multiDeleteArticle(Request $request, EntityManagerInterface $em): Response
     {
         $result = $request->request->all();
+        if (empty($result)) {
+            $this->addFlash('error','Aucun article selectionné');
+            return $this->redirectToRoute('admin_manage_article');
+        }
+
         foreach ($result as $key => $value) {
             $article = $em->getRepository(Article::class)->findOneBy([
                 'id' => $key
@@ -72,6 +75,12 @@ class AdminController extends AbstractController
         $result = $request->request->all();
         $action = $result['actionMass'];
         unset($result["actionMass"]);
+
+        if (empty($result)) {
+            $this->addFlash('error','Aucun commentaire selectionné');
+            return $this->redirectToRoute('admin_manage_comment');
+        }
+
         foreach ($result as $key => $value) {
             $comment = $em->getRepository(Comment::class)->findOneBy([
                 "article" => $key
