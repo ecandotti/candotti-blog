@@ -6,6 +6,7 @@ use App\Entity\Article;
 use App\Entity\Comment;
 use App\Form\FilterArticleType;
 use App\Form\FilterCommentType;
+use DateTime;
 use Doctrine\ORM\EntityManagerInterface;
 use Knp\Component\Pager\PaginatorInterface;
 use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
@@ -100,17 +101,22 @@ class AdminController extends AbstractController
     {
         $form = $this->createForm(FilterArticleType::class);
         $form->handleRequest($request);
-
         if (!empty($form->get('nameFilter')->getData())) {
+            $currentDate = new DateTime('now');
             $statut = $form->get('nameFilter')->getData();
-            $dql = "SELECT a FROM App:Article a WHERE a.status = :statut";
-            $articles = $em->createQuery($dql);
-            $articles->setParameter('statut', (string) $statut);
+            if ($statut == "P") {
+                $dql = "SELECT a FROM App:Article a WHERE a.publishAt < :statut";
+                $articles = $em->createQuery($dql);
+                $articles->setParameter('statut', $currentDate);
+            } else {
+                $dql = "SELECT a FROM App:Article a WHERE a.publishAt > :statut";
+                $articles = $em->createQuery($dql);
+                $articles->setParameter('statut', $currentDate);
+            }
         } else {
             $dql = "SELECT a FROM App:Article a";
             $articles = $em->createQuery($dql);
         }
-        // dd($articles);
 
         $articles = $paginator->paginate(
             $articles, // Requête contenant les données à paginer
