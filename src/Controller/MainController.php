@@ -10,6 +10,7 @@ use App\Entity\Share;
 use App\Form\ContactType;
 use App\Form\NewsLetterType;
 use DateTime;
+use Doctrine\ORM\EntityManagerInterface;
 use Knp\Component\Pager\PaginatorInterface;
 use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
 use Symfony\Component\HttpFoundation\Request;
@@ -22,11 +23,13 @@ class MainController extends AbstractController
     /**
      * @Route("/", name="home", methods={"GET"})
      */
-    public function home(Request $request, PaginatorInterface $paginator): Response
+    public function home(Request $request, PaginatorInterface $paginator, EntityManagerInterface $em): Response
     {
-        $articles = $this->getDoctrine()->getRepository(Article::class)->findBy([
-            'status' => 'P'
-        ],['createAt' => 'DESC']);
+        $currentDate = new DateTime('now');
+
+        $query = $em->createQuery('SELECT a FROM App:Article a WHERE a.publishAt < :currentDate');
+        $query->setParameter('currentDate', $currentDate);
+        $articles = $query->getResult();
 
         for ($i=0; $i < count($articles); $i++) { 
             $isLiked  = $this->getDoctrine()->getRepository(Like::class)->findBy([
