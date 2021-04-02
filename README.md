@@ -36,8 +36,10 @@ To Do :
 [X] Mot de passe oublié  
 [X] Changer son mot de passe  
 [X] Mise en place d'un captcha  
-[_] Trier (autheur, titre, date=default)   
-[_] Trier (autheur, titre, date=default) pour User   
+[X] HTTPS force redirection    
+[X] Date de publication programmable    
+[X] Trier (titre, date)  
+[_] Trier (date) User  
 [_] Search bar    
+[_] Optimisation des requêtes    
 [_] Consent Cookie    
-[_] Date de publication programmable    
