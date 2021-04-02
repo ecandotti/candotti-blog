@@ -44,9 +44,7 @@
                     <th scope="col">
                         {{ knp_pagination_sortable(comments, 'Date', 'c.createAt') }}
                     </th>
-                    <th scope="col">
-                        {{ knp_pagination_sortable(comments, 'Statut', 'c.status') }}
-                    <th scope="col">Actions</th>
+                    <th scope="col">Statut<th scope="col">Actions</th>
                 </tr>
             </thead>
             <tbody>
@@ -54,7 +52,7 @@
                     <tr>
                         <th><input type="checkbox" name="{{ comment.article.id }}" value="article_id"></th>
                         <th scope="row">
-                            <a href="{{ path('article_show', {id: comment.article.id }) }}" class="text-decoration-none text-body">
+                            <a href="{{ path('article_show', {id: comment.article.id}) }}" class="text-decoration-none text-body">
                                 {{ comment.article.title }}
                         </th>
                         <td>{{ comment.content }}</td>

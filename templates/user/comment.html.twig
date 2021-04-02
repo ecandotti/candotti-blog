@@ -7,29 +7,26 @@
 
     {% include "user/_menu.html.twig" %}
 
+    <small>Tous les commentaires que vous avez posté, y compris ce qui n'ont pas été validé par l'admin.</small>
     {% if articles is not empty %}
         <table class="table table-striped">
             <thead>
                 <tr>
-                    <th scope="col">Image</th>
-                    <th scope="col">{{ knp_pagination_sortable(articles, 'Titre', 'a.title') }}</th>
-                    <th scope="col">{{ knp_pagination_sortable(articles, 'Autheur', 'a.author') }}</th>
+                    <th scope="col">Titre</th>
                     <th scope="col">Catégorie</th>
                     <th scope="col">Contenu</th>
                     <th scope="col">Commentaire</th>
-                    <th scope="col">{{ knp_pagination_sortable(articles, 'Date', 'a.createAt') }}</th>
+                    <th scope="col">{{ knp_pagination_sortable(articles, 'Date', 'c.createAt') }}</th>
                 </tr>
             </thead>
             <tbody>
                 {% for comment in articles %}
                     <tr>
-                        <th scope="row">img</th>
                         <th scope="row"><a href="{{ path('article_show', { id: comment.article.id }) }}">{{ comment.article.title }}</th>
-                        <th scope="row">{{ comment.user.firstName }} {{ comment.user.lastName }} </th>
                         <th scope="row">{{ comment.article.category }}</th>
                         <th scope="row">{{ comment.article.content|slice(0,10) ~ '...' }}</th>
                         <th scope="row">{{ comment.content|slice(0,10) ~ '...' }}</th>
-                        <th scope="row">{{ comment.article.createAt|date('d/m/Y') }}</th>
+                        <th scope="row">{{ comment.createAt|date('d/m/Y') }}</th>
                     </tr>
                 {% endfor %}
             </tbody>

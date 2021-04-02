@@ -6,6 +6,8 @@ use App\Entity\Article;
 use FOS\CKEditorBundle\Form\Type\CKEditorType;
 use Symfony\Component\Form\AbstractType;
 use Symfony\Component\Form\Extension\Core\Type\ChoiceType;
+use Symfony\Component\Form\Extension\Core\Type\DateTimeType;
+use Symfony\Component\Form\Extension\Core\Type\DateType;
 use Symfony\Component\Form\Extension\Core\Type\FileType;
 use Symfony\Component\Form\Extension\Core\Type\NumberType;
 use Symfony\Component\Form\Extension\Core\Type\SubmitType;
@@ -48,13 +50,9 @@ class ArticleType extends AbstractType
                     'Politique' => 'politics',
                 ]
             ])
-            ->add('status', ChoiceType::class, [
-                'required' => true,
-                'label' => 'Status',
-                'choices' => [
-                    'Publié' => 'P',
-                    'Non Publié' => 'NP',
-                ]
+            ->add('publishAt', DateTimeType::class, [
+                'required' => false,
+                'label' => 'Date de publication',
             ])
             ->add('valider', SubmitType::class, [
                 'label' => 'Valider',

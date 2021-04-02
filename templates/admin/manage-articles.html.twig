@@ -33,9 +33,9 @@
                 <tr>
                     <th scope="col"> </th>
                     <th scope="col">{{ knp_pagination_sortable(articles, 'Titre', 'a.title') }}</th>
-                    <th scope="col">{{ knp_pagination_sortable(articles, 'Autheur', 'u.firstName') }}</th>
-                    <th scope="col">{{ knp_pagination_sortable(articles, 'Date', 'a.createAt') }}</th>
-                    <th scope="col">{{ knp_pagination_sortable(articles, 'Status', 'a.status') }}</th>
+                    <th scope="col">Auteur</th>
+                    <th scope="col">{{ knp_pagination_sortable(articles, 'Date', 'a.publishAt') }}</th>
+                    <th scope="col">Statut</th>
                     <th scope="col">Actions</th>
                 </tr>
             </thead>
@@ -45,12 +45,12 @@
                         <th scope="row"><input type="checkbox" name="{{ article.id }}" value="article_id"></th>
                         <th scope="row">{{ article.title }}</th>
                         <th scope="row">{{ article.user.firstName }} {{ article.user.lastName }}</th>
-                        <th scope="row">{{ article.createAt|date('d/m/Y h:m:s') }}</th>
+                        <th scope="row">{{ article.publishAt|date('d/m/Y h:m:s') }}</th>
                         <td>
-                            {% if article.status == "P" %}
+                            {% if article.publishAt < date() %}
                                 <span class="badge badge-pill badge-success">Publié</span>
                             {% endif %}
-                            {% if article.status == "NP" %}
+                            {% if article.publishAt > date() %}
                                 <span class="badge badge-pill badge-warning">Non publié</span>
                             {% endif %}
                         </td>
