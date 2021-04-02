@@ -56,12 +56,6 @@ class Article
     private $comments;
 
     /**
-     * @ORM\Column(type="string", length=5, options={"default": "P"})
-     * P = Published, NP = Not Published)
-     */
-    private $status;
-
-    /**
      * @ORM\OneToMany(targetEntity=Like::class, mappedBy="article", orphanRemoval=true)
      */
     private $likes;
@@ -80,6 +74,11 @@ class Article
      * @ORM\Column(type="string", length=255)
      */
     private $category;
+
+    /**
+     * @ORM\Column(type="datetime")
+     */
+    private $publishAt;
 
     public function __construct()
     {
@@ -196,18 +195,6 @@ class Article
         return $this;
     }
 
-    public function getStatus(): ?string
-    {
-        return $this->status;
-    }
-
-    public function setStatus(string $status): self
-    {
-        $this->status = $status;
-
-        return $this;
-    }
-
     /**
      * @return Collection|Like[]
      */
@@ -298,6 +285,18 @@ class Article
     public function setCategory(string $category): self
     {
         $this->category = $category;
+
+        return $this;
+    }
+
+    public function getPublishAt(): ?\DateTimeInterface
+    {
+        return $this->publishAt;
+    }
+
+    public function setPublishAt(\DateTimeInterface $publishAt): self
+    {
+        $this->publishAt = $publishAt;
 
         return $this;
     }
