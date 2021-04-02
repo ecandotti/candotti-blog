@@ -11,6 +11,7 @@ use App\Form\ChangePwdType;
 use App\Form\UserType;
 use App\Repository\ArticleRepository;
 use App\Repository\UserRepository;
+use Doctrine\ORM\EntityManagerInterface;
 use Knp\Component\Pager\PaginatorInterface;
 use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
 use Symfony\Component\HttpFoundation\Response;
@@ -155,12 +156,12 @@ class UserController extends AbstractController
     /**
      * @Route("/comment", name="user_comment")
      */
-    public function adminDashboard(Request $request, PaginatorInterface $paginator): Response
+    public function userComment(Request $request, PaginatorInterface $paginator, EntityManagerInterface $em): Response
     {
-        $articles_comment = $this->getDoctrine()->getRepository(Comment::class)->findBy([
-            'user' => $this->getUser(),
-            'status' => 'V'
-        ],['createAt' => 'DESC']);
+        $dql = "SELECT c FROM App:Comment c WHERE c.user = :user";
+        $articles = $em->createQuery($dql);
+        $articles->setParameter('user', $this->getUser()->getId());
+        $articles_comment = $articles->getResult();
 
         $articles = $paginator->paginate(
             $articles_comment, // Requête contenant les données à paginer
