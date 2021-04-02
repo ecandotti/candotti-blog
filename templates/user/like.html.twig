@@ -13,7 +13,7 @@
                 <tr>
                     <th scope="col">Image</th>
                     <th scope="col">{{ knp_pagination_sortable(articles, 'Titre', 'a.title') }}</th>
-                    <th scope="col">{{ knp_pagination_sortable(articles, 'Autheur', 'a.author') }}</th>
+                    <th scope="col">{{ knp_pagination_sortable(articles, 'Auteur', 'a.author') }}</th>
                     <th scope="col">Catégorie</th>
                     <th scope="col">Contenu</th>
                     <th scope="col">{{ knp_pagination_sortable(articles, 'Date', 'a.createAt') }}</th>
@@ -27,7 +27,7 @@
                         <th scope="row">{{ likes.user.firstName }} {{ likes.user.lastName }}</th>
                         <th scope="row">{{ likes.article.category }}</th>
                         <th scope="row">{{ likes.article.content|slice(0,10) ~ '...' }}</th>
-                        <th scope="row">{{ likes.article.createAt|date('d/m/Y') }}</th>
+                        <th scope="row">{{ likes.article.publishAt|date('d/m/Y') }}</th>
                     </tr>
                 {% endfor %}
             </tbody>

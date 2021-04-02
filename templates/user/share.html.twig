@@ -13,10 +13,10 @@
                 <tr>
                     <th scope="col">Image</th>
                     <th scope="col">{{ knp_pagination_sortable(articles, 'Titre', 'a.title') }}</th>
-                    <th scope="col">{{ knp_pagination_sortable(articles, 'Autheur', 'a.author') }}</th>
+                    <th scope="col">{{ knp_pagination_sortable(articles, 'Auteur', 'a.author') }}</th>
                     <th scope="col">Catégorie</th>
                     <th scope="col">Contenu</th>
-                    <th scope="col">{{ knp_pagination_sortable(articles, 'Date', 'a.createAt') }}</th>
+                    <th scope="col">{{ knp_pagination_sortable(articles, 'Date', 'a.publishAt') }}</th>
                 </tr>
             </thead>
             <tbody>
@@ -27,7 +27,7 @@
                         <th scope="row">{{ share.user.firstName }} {{ share.user.lastName }}</th>
                         <th scope="row">{{ share.article.category }}</th>
                         <th scope="row">{{ share.article.content|slice(0,10) ~ '...' }}</th>
-                        <th scope="row">{{ share.article.createAt|date('d/m/Y') }}</th>
+                        <th scope="row">{{ share.article.publishAt|date('d/m/Y') }}</th>
                     </tr>
                 {% endfor %}
             </tbody>

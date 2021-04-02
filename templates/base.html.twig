@@ -58,7 +58,7 @@
                     {% endif %}
 
                     <div class="card-body">
-                        <p class="card-text">{{ article.content|raw|slice(0,20) ~ '...' }}</p>
+                        <p class="card-text">{{ article.content|striptags|slice(0,20) ~ "..."|raw }}</p>
                     </div>
                     <ul class="list-group list-group-flush">
                         <li class="list-group-item">Categorie : {{ article.category }}</li>
@@ -79,13 +79,13 @@
                         </div>
                     </div>
                     <div class="card-footer text-muted">
-                        Le {{ article.createAt|date('d-m-Y H:i:s') }} par <b>{{ article.user.email}}</b>.
+                        Le {{ article.publishAt|date('d-m-Y H:i:s') }} par <b>{{ article.user.email}}</b>.
                     </div>
                 </div>
             {% else %}
                 <h6>Aucun article disponible :(</h6>
             {% endfor %}
-        <div class="text-center d-flex justify-content-center">
+        <div class="d-flex justify-content-center">
             {{ knp_pagination_render(articles) }}
         </div>
     {% endblock %}
