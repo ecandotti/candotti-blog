@@ -33,7 +33,7 @@ class ArticleController extends AbstractController
 
         $form = $this->createForm(ArticleType::class, $article);
         $form->handleRequest($request);
-
+        
         if ($form->isSubmitted() && $form->isValid()) {
             $readTime = $form->getData()->getReadTime();
             

@@ -51,7 +51,6 @@ class ArticleType extends AbstractType
                 ]
             ])
             ->add('publishAt', DateTimeType::class, [
-                'required' => false,
                 'label' => 'Date de publication',
             ])
             ->add('valider', SubmitType::class, [

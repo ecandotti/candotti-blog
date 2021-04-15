@@ -39,7 +39,8 @@ To Do :
 [X] HTTPS force redirection    
 [X] Date de publication programmable    
 [X] Trier (titre, date)  
-[_] Trier (date) User  
+[X] Secure publication (PublishAt give error)
 [_] Search bar    
 [_] Optimisation des requêtes    
+[_] Trier (date) User  
 [_] Consent Cookie    
