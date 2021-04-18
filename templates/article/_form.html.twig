@@ -8,6 +8,7 @@
             <h6>Image postée :</h6>
             <img src="{{ asset('/uploads/' ~ article.image.name) }}" class="img-fluid mb-2" width="200px" height="200px"/>
         {% else %}
+            <small>Taille recommandée : 1200x300</small>
             {{ form_row(form.image) }}
         {% endif %}
         {{ form_row(form.category) }}
