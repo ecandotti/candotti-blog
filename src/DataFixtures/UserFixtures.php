@@ -25,13 +25,12 @@ class UserFixtures extends Fixture
             ->setFirstName('Barry')
             ->setLastName('Alen')
             ->setPhone('+33 123456789')
-            ->setEmail('enzo.candotti16@hotmail.fr')
+            ->setEmail('user@candotti-blog.fr')
             ->setPassword($this->encoder->encodePassword($user, 'password'))
             ->setRoles(['ROLE_USER'])
         ;
         
         $manager->persist($user);
-        $this->addReference('simple-user', $user);
 
         // Create admin account
         $admin = new User();
@@ -39,12 +38,13 @@ class UserFixtures extends Fixture
             ->setFirstName('Suprem')
             ->setLastName('Admin')
             ->setPhone('+33 66666666')
-            ->setEmail('admin@candotti-blog.com')
+            ->setEmail('admin@candotti-blog.fr')
             ->setPassword($this->encoder->encodePassword($user, 'password'))
             ->setRoles(['ROLE_ADMIN'])
         ;
         
         $manager->persist($admin);
+        $this->addReference('admin', $user);
 
         $manager->flush();
     }
