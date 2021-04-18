@@ -25,12 +25,15 @@ class MainController extends AbstractController
      */
     public function home(Request $request, PaginatorInterface $paginator, EntityManagerInterface $em): Response
     {
+        // Get currentDate
         $currentDate = new DateTime('now');
 
+        // DQL Query = get all the articles until today
         $query = $em->createQuery('SELECT a FROM App:Article a WHERE a.publishAt < :currentDate');
         $query->setParameter('currentDate', $currentDate);
         $articles = $query->getResult();
 
+        // Check if currentUser has already like/share, for fontawesome icon style in twig
         for ($i=0; $i < count($articles); $i++) { 
             $isLiked  = $this->getDoctrine()->getRepository(Like::class)->findBy([
                 'user' => $this->getUser(),
@@ -42,6 +45,7 @@ class MainController extends AbstractController
                 'article' => $articles[$i]->getId()
             ]);
             
+            // If alreadyShared/Liked, add key/value in $article object
             if ($isShared) {
                 $articles[$i]->alreadyShare = true;
             } else {
@@ -73,11 +77,14 @@ class MainController extends AbstractController
     {
         $newsletter = new NewsLetter();
 
+        // Create NewsletterForm
         $form = $this->createForm(NewsLetterType::class, $newsletter);
         $form->handleRequest($request);
 
+        // Check if request isn't empty, is string, is email.
         if (!empty($form->get('email')->getData()) && is_string($form->get('email')->getData())) {
             $newsletter->setEmail($form->get('email')->getData());
+            // Insert in BDD and alter user
             $em = $this->getDoctrine()->getManager();
             $em->persist($newsletter);
             $em->flush();
@@ -104,10 +111,11 @@ class MainController extends AbstractController
     public function contact_post(Request $request)
     {
         $contact = new Contact();
-
+        // Create form
         $form = $this->createForm(ContactType::class, $contact);
         $form->handleRequest($request);
 
+        // If form is valid, insert info in BDD and alert user
         if ($form->isSubmitted() && $form->isValid()) {
             $em = $this->getDoctrine()->getManager();
             $em->persist($contact);
@@ -127,19 +135,24 @@ class MainController extends AbstractController
      */
     public function addLikes($id, Article $article)
     {
+        // EntityManager
         $em = $this->getDoctrine()->getManager();
         
+        // If article doesn't exist, throw error
         if (!$article) {
             throw new NotFoundHttpException('Article non trouvé');
         }
 
+        // Get User
         $user = $this->getUser();
 
+        // find if it's liked
         $alreadyLike = $em->getRepository(Like::class)->findOneBy([
             'user' => $user,
             'article' => $article
         ]);
 
+        // If already liked, display err message, else add the like !
         if ($alreadyLike) {
             $this->addFlash('error', 'Vous avez déjà cet article en favoris !');
             return $this->redirectToRoute('home');
@@ -161,19 +174,24 @@ class MainController extends AbstractController
      */
     public function removeLikes($id, Article $article)
     {
+        // EntityManager
         $em = $this->getDoctrine()->getManager();
         
+        // If article doesn't exist, throw error
         if (!$article) {
             throw new NotFoundHttpException('Article non trouvé');
         }
 
+        // Get User
         $user = $this->getUser();
 
+        // find if it's liked
         $alreadyLike = $em->getRepository(Like::class)->findOneBy([
             'user' => $user,
             'article' => $article
         ]);
 
+        // If already liked, display err message, else remove the like !
         if ($alreadyLike) {
             $em->remove($alreadyLike);
             $em->flush();
@@ -191,19 +209,24 @@ class MainController extends AbstractController
      */
     public function addShares($id, Article $article)
     {
+        // EntityManager
         $em = $this->getDoctrine()->getManager();
         
+        // If article doesn't exist, throw error
         if (!$article) {
             throw new NotFoundHttpException('Article non trouvé');
         }
 
+        // Get User
         $user = $this->getUser();
 
+        // find if it's shared
         $alreadyShare = $em->getRepository(Share::class)->findOneBy([
             'user' => $user,
             'article' => $article
         ]);
 
+        // If already shared, display err message, else add the share !
         if ($alreadyShare) {
             $this->addFlash('error', 'Vous avez déjà partagé cet article !');
             return $this->redirectToRoute('home');
@@ -225,19 +248,24 @@ class MainController extends AbstractController
      */
     public function removeShares($id, Article $article)
     {
+        // EntityManager
         $em = $this->getDoctrine()->getManager();
         
+        // If article doesn't exist, throw error
         if (!$article) {
             throw new NotFoundHttpException('Article non trouvé');
         }
 
+        // Get User
         $user = $this->getUser();
 
+        // find if it's shared
         $alreadyShare = $em->getRepository(Share::class)->findOneBy([
             'user' => $user,
             'article' => $article
         ]);
 
+        // If user share this article, remove the shard and display message, else display err message
         if ($alreadyShare) {
             $em->remove($alreadyShare);
             $em->flush();
