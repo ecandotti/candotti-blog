@@ -22,21 +22,11 @@ class ArticleFixtures extends Fixture implements DependentFixtureInterface
                 ->setCreateAt(new DateTime())
                 ->setPublishAt(new DateTime())
                 ->setReadTime(4)
-                ->setContent('
-                Lorem ipsum dolor sit amet, consectetur adipiscing elit. Vestibulum vitae vulputate enim. Proin tempor nisi placerat diam molestie pellentesque. 
-                Proin feugiat libero massa, eu sodales risus dapibus nec. Donec sed magna consequat, dapibus mauris in, pulvinar metus. Fusce diam metus, 
-                sagittis sed ipsum vel, facilisis dignissim neque. Pellentesque dapibus nisl eget velit egestas, ut aliquet nisl eleifend. 
-                Nunc sit amet sagittis diam. Maecenas id pellentesque sapien.
-                Etiam ac justo id ante tincidunt laoreet. Ut scelerisque nec dui nec fermentum. Pellentesque condimentum varius purus. 
-                Vestibulum a venenatis nisl. Sed tempus efficitur arcu. Nulla aliquam elementum ante in vulputate. Curabitur pulvinar, augue sed efficitur semper, 
-                elit mauris bibendum nisi, vel ultrices diam nisl sit amet felis. Class aptent taciti sociosqu ad litora torquent per conubia nostra, per inceptos himenaeos. 
-                Orci varius natoque penatibus et magnis dis parturient montes, nascetur ridiculus mus. Suspendisse iaculis sem eu nisi tristique viverra.
-                Nam cursus arcu in nibh rhoncus, nec ullamcorper lectus laoreet. Vivamus pretium lacus blandit commodo consectetur. Aliquam tempus ex nibh, 
-                et egestas nunc tincidunt eleifend. Phasellus sollicitudin, erat id pharetra pretium, elit lacus sollicitudin magna, et eleifend nibh odio venenatis erat. 
-                Curabitur dapibus quam magna, vel auctor purus volutpat et. Proin nec ullamcorper lorem, vitae vehicula justo. Duis non nibh turpis. Ut bibendum pretium gravida. 
-                Mauris commodo leo vel malesuada vehicula. Nunc in eros rhoncus, elementum ex id, ornare ex. Nam sodales pulvinar risus in elementum. Pellentesque a lacus at urna malesuada maximus. 
-                Donec ornare, nunc quis aliquet imperdiet, nulla nisl lacinia felis, nec sagittis velit orci eget eros. Donec convallis semper sapien eu euismod.
-                ')
+                ->setContent('<p>Le Monde et ses partenaires peuvent, indépendamment ou conjointement, déposer lors de votre visite sur ce site des cookies et technologies similaires, afin de collecter des informations, y compris des données personnelles, telles que : adresse IP, identifiants uniques, données de navigation, données de géolocalisation.
+
+Ces données sont traitées par Le Monde et/ou ses partenaires aux fins suivantes : analyse et amélioration de l’expérience utilisateur et de l’offre de contenus, produits et services du Monde, mesure et analyse d’audience, intéraction avec les réseaux sociaux, lutte contre la fraude, affichage de publicités et contenus personnalisés sur le site du Monde ou de tiers, mesure de performance et d’attractivité des publicités et du contenu. Pour plus d’informations, consulter notre politique de confidentialité.
+
+A l’exception de ceux nécessaires au fonctionnement du site ainsi que, sous certaines conditions, à la mesure d’audience, les cookies et technologies similaires ne peuvent être déposés qu’avec votre consentement. Vous pouvez librement donner, refuser ou retirer votre consentement à tout moment en accédant à notre outil de paramétrage des cookies. Si vous ne consentez pas à l’utilisation de ces technologies, nous considérerons que vous vous opposez également à tout dépôt de cookie que certains partenaires justifient par un intérêt légitime.</p>')
             ;
 
             $manager->persist($article);
