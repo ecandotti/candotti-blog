@@ -28,8 +28,8 @@ class MainController extends AbstractController
         // Get currentDate
         $currentDate = new DateTime('now');
 
-        // DQL Query = get all the articles until today
-        $query = $em->createQuery('SELECT a FROM App:Article a WHERE a.publishAt < :currentDate');
+        // DQL Query = get all the articles until today order by DESC
+        $query = $em->createQuery('SELECT a FROM App:Article a WHERE a.publishAt < :currentDate ORDER BY a.createAt DESC');
         $query->setParameter('currentDate', $currentDate);
         $articles = $query->getResult();
 
