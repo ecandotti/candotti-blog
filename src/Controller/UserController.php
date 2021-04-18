@@ -164,8 +164,8 @@ class UserController extends AbstractController
      */
     public function userComment(Request $request, PaginatorInterface $paginator, EntityManagerInterface $em): Response
     {
-        // Get all comment of user (by user ID)
-        $dql = "SELECT c FROM App:Comment c WHERE c.user = :user";
+        // Get all comment of user (by user ID) DESC
+        $dql = "SELECT c FROM App:Comment c WHERE c.user = :user ORDER BY c.createAt DESC";
         $articles = $em->createQuery($dql);
         $articles->setParameter('user', $this->getUser()->getId());
         $articles_comment = $articles->getResult();
