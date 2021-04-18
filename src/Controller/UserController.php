@@ -33,6 +33,7 @@ class UserController extends AbstractController
      */
     public function userDashboard(): Response
     {
+        // Get 5 latest article like/share/comment of user (by user ID)
         $fifth_article_like = $this->getDoctrine()->getRepository(Like::class)->findBy([
             'user' => $this->getUser()
         ], [
@@ -68,6 +69,7 @@ class UserController extends AbstractController
         $form = $this->createForm(UserType::class, $user);
         $form->handleRequest($request);
 
+        // UserForm to change personnal values
         if ($form->isSubmitted() && $form->isValid()) {
             $this->getDoctrine()->getManager()->flush();
 
@@ -75,6 +77,7 @@ class UserController extends AbstractController
             return $this->redirectToRoute('user_info');
         }
 
+        // Alert user
         return $this->render('user/info.html.twig', [
             'userForm' => $form->createView(),
         ]);
@@ -88,22 +91,23 @@ class UserController extends AbstractController
         $form = $this->createForm(ChangePwdType::class);
         $form->handleRequest($request);
 
+        // PasswordForm to change password
         if ($form->isSubmitted() && $form->isValid()) {
             $user = $this->getUser();
             
             $formInfo = $form->getData();
             $old_pwd = $formInfo['oldPassword']; 
             $new_pwd = $formInfo['newPassword'];
-
+            // Check if password is valid
             $checkPass = $passwordEncoder->isPasswordValid($user, $old_pwd);
-            
+            // If its true change password (hashed)
             if($checkPass) {
                 $userRepo->upgradePassword($user, $passwordEncoder->encodePassword($user, $new_pwd));
             } else {
                 $this->addFlash('error', 'Mot de passe actuelle est erroné !');
                 return $this->redirectToRoute('user_password');
             }
-
+            // Alert user
             $this->addFlash('success', 'Mot de passe changé avec succès');
             return $this->redirectToRoute('user_password');
         }
@@ -118,6 +122,7 @@ class UserController extends AbstractController
      */
     public function userLike(Request $request, PaginatorInterface $paginator): Response
     {
+        // Get all articles liked of user (by user ID)
         $articles_like = $this->getDoctrine()->getRepository(Like::class)->findBy([
             'user' => $this->getUser()
         ]);
@@ -138,6 +143,7 @@ class UserController extends AbstractController
      */
     public function userShare(Request $request, PaginatorInterface $paginator): Response
     {
+        // Get all articles shared of user (by user ID)
         $articles_share = $this->getDoctrine()->getRepository(Share::class)->findBy([
             'user' => $this->getUser()
         ],['createAt' => 'DESC']);
@@ -158,6 +164,7 @@ class UserController extends AbstractController
      */
     public function userComment(Request $request, PaginatorInterface $paginator, EntityManagerInterface $em): Response
     {
+        // Get all comment of user (by user ID)
         $dql = "SELECT c FROM App:Comment c WHERE c.user = :user";
         $articles = $em->createQuery($dql);
         $articles->setParameter('user', $this->getUser()->getId());
