@@ -1,25 +1,24 @@
 <h1 align="center">
-    <img height="250" src="https://img-0.journaldunet.com/mL_kyren1s51K39UUm-FZkcpKxw=/1280x/smart/0f11552fb07b481cb2fa21654a1bad70/ccmcms-jdn/11573128.jpg">
+    <img height="200" src="https://img-0.journaldunet.com/mL_kyren1s51K39UUm-FZkcpKxw=/1280x/smart/0f11552fb07b481cb2fa21654a1bad70/ccmcms-jdn/11573128.jpg">
 </h1>
 
 # :earth_africa: Candotti Blog  
-*<div align="center">Blog created in Symfony 4.4 as part of a Dev Back-End evaluation at Ynov Campus</div>*  
-
-With :  
+*<div style="text-align:center">Blog created in Symfony 4.4 as part of a Dev Back-End evaluation at Ynov Campus</div>*  
+  
 - Symfony 4.4  
 - Bootstrap 4
 - PHP 7.2.5  
 
-# How to clone/use the project
+## How to clone/use the project
 ~~~bash
 - git clone https://github.com/ecandotti/candotti-blog.git (Go inside the folder)
 - composer requirement  
 - symfony server:start  
 ~~~
-
+:warning: Don't forget to change .env value, turn on your Apache and MySQL ! :warning:  
 Enjoy :call_me_hand:
   
-To Do :  
+## To Do :  
 - [X] Creation du projet  
 - [X] Initialisation base de données  
 - [X] Entité Article, User  
