@@ -37,10 +37,10 @@ class ArticleController extends AbstractController
         if ($form->isSubmitted() && $form->isValid()) {
             $readTime = $form->getData()->getReadTime();
             
-            // ReadTime function | 1 minute = 60 letters 
+            // ReadTime function | 1 minute = 200 words 
             if ($readTime == NULL) {
-                $len_content = strlen($form->getData()->getContent());
-                $article->setReadTime(round($len_content / 60));
+                $len_content = explode(' ', $form->getData()->getContent());
+                $article->setReadTime(ceil(count($len_content) / 200));
             }
 
             // Gestion de l'image
