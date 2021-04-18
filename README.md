@@ -15,7 +15,7 @@
 ~~~
 :warning: Don't forget to change .env value, turn on your Apache and MySQL ! :warning:  
 ~~~bash
-- composer requirement  
+- composer install  
 - php bin/console doctrine:database:create  
 - php bin/console make:migration  
 - php bin/console doctrine:migrations:migrate 
