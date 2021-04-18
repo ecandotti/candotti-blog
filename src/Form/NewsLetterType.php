@@ -19,7 +19,8 @@ class NewsLetterType extends AbstractType
             ])
             ->add('captcha', CaptchaType::class, [
                 'label' => 'Captcha*',
-                'attr' => ['class' => 'ml-2']
+                'attr' => ['class' => 'ml-2'],
+                'required' => true
             ])
         ;
     }
