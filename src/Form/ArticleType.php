@@ -53,6 +53,14 @@ class ArticleType extends AbstractType
             ->add('publishAt', DateTimeType::class, [
                 'label' => 'Date de publication',
             ])
+            ->add('isVisible', ChoiceType::class, [
+                'required' => true,
+                'label' => 'Status :',
+                'choices' => [
+                    'Visible' => true,
+                    'Non visible' => false,
+                ]
+            ])
             ->add('valider', SubmitType::class, [
                 'label' => 'Valider',
                 'attr' => ['class' => 'btn-success']
