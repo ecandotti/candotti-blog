@@ -84,9 +84,9 @@ class ArticleController extends AbstractController
      */
     public function show(Article $article, Request $request)
     {
-        // Check status of article
-        if (!$article->getIsVisible() || $article->getPublishAt() > new DateTime('now')) {
-            $this->addFlash('error', 'Une erreur est survenu :)');
+        // Check status of article and user status
+        if ($article->getPublishAt() > new DateTime('now') && $this->getUser()->getRoles()[0] != "ROLE_ADMIN") {
+            $this->addFlash('error', 'Il est trop tôt pour voir cet article :)');
             return $this->redirectToRoute('home');
         }
 
@@ -198,7 +198,7 @@ class ArticleController extends AbstractController
 
             // Alert user
             $this->addFlash('success', 'Article édité avec succès');
-            return $this->redirectToRoute('article_show', [ 'id' => $id ]);
+            return $this->redirectToRoute('admin_dashboard');
         }
 
         return $this->render('article/edit.html.twig', [
