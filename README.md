@@ -69,8 +69,7 @@ Enjoy :call_me_hand:
 - [X] Trier (titre, date)  
 - [X] Secure publication (PublishAt give error)
 - [X] Add hidden variable in Article entity    
-- [ ] Search bar    
-- [ ] Optimisation des requêtes    
-- [ ] Trier (date) User  
+- [X] Search bar    
+- [_] Optimisation des requêtes  
 - [ ] Consent Cookie    
 
