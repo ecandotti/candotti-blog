@@ -39,12 +39,15 @@
             </div>
             <ul class="list-group list-group-flush">
                 <li class="list-group-item">
-                    Categorie : {{ article.category }} | 
-                    Status : 
-                    {% if article.isVisible and article.publishAt < date() %}
-                        <span class="badge badge-pill badge-success">Visible</span>
-                    {% else %}
-                        <span class="badge badge-pill badge-warning">Non visible</span>
+                    Categorie : {{ article.category }}
+                    {% if app.user and is_granted('ROLE_ADMIN') %}
+                        | 
+                        Status : 
+                        {% if article.isVisible and article.publishAt < date() %}
+                            <span class="badge badge-pill badge-success">Visible</span>
+                        {% else %}
+                            <span class="badge badge-pill badge-warning">Non visible</span>
+                        {% endif %}
                     {% endif %}
                 </li>
             </ul>
