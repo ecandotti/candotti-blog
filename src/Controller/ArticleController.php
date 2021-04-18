@@ -37,7 +37,7 @@ class ArticleController extends AbstractController
         if ($form->isSubmitted() && $form->isValid()) {
             $readTime = $form->getData()->getReadTime();
             
-            // ReadTime function
+            // ReadTime function | 1 minute = 60 letters 
             if ($readTime == NULL) {
                 $len_content = strlen($form->getData()->getContent());
                 $article->setReadTime(round($len_content / 60));
@@ -46,18 +46,21 @@ class ArticleController extends AbstractController
             // Gestion de l'image
             if ($form->get('image')->getData()) {
                 $image = $form->get('image')->getData();
+
+                // Add unique image_name in image folder
                 $fichier = md5(uniqid()) . '.' . $image->guessExtension();
                 $image->move(
                     $this->getParameter('images_directory'),
                     $fichier
                 );
 
+                // Set data
                 $img = new Image();
                 $img->setName($fichier);
                 $article->setImage($img);
             }
 
-            
+            // Complet missing data in article
             $article->setCreateAt(new DateTime());
             $article->setUser($this->getUser());
             
@@ -65,6 +68,7 @@ class ArticleController extends AbstractController
             $entityManager->persist($article);
             $entityManager->flush();
 
+            // Alert user
             $this->addFlash('success', 'Article créé avec succès');
             return $this->redirectToRoute('home');
         }
@@ -80,15 +84,18 @@ class ArticleController extends AbstractController
      */
     public function show(Article $article, Request $request)
     {
+        // Get all validate comments of article selected in DESC
         $comments = $this->getDoctrine()->getRepository(Comment::class)->findBy([
             'article' => $article,
             'status' => "V"
         ],['createAt' => 'desc']);
 
+        // 5 latest article in DESC
         $latest_article = $this->getDoctrine()->getRepository(Article::class)->findBy([], [
             'createAt' => 'desc',
         ],5);
 
+        // >>> Check if it's shared by user
         $isShared  = $this->getDoctrine()->getRepository(Share::class)->findBy([
                 'user' => $this->getUser(),
                 'article' => $article->getId()
@@ -99,7 +106,9 @@ class ArticleController extends AbstractController
         } else {
             $article->alreadyShare = false;
         }
+        // <<< End check
 
+        // >>> Check if it's liked by user
         $isLiked  = $this->getDoctrine()->getRepository(Like::class)->findBy([
             'user' => $this->getUser(),
             'article' => $article->getId()
@@ -110,13 +119,17 @@ class ArticleController extends AbstractController
         } else {
             $article->alreadyLike = false;
         }
+        // <<< End check
 
+        // >>> FormComment System
         $comment = new Comment();
         $form = $this->createForm(CommentType::class, $comment);
         $form->handleRequest($request);
 
         if ($form->isSubmitted() && $form->isValid()) {
+            // set missing data
             $comment->setArticle($article);
+            // Status of comment is : Waiting
             $comment->setStatus('W');
             $comment->setUser($this->getUser());
             $comment->setCreateAt(new DateTime('now'));
@@ -125,6 +138,7 @@ class ArticleController extends AbstractController
             $doctrine->persist($comment);
             $doctrine->flush();
 
+            // Alert user
             $this->addFlash('success', 'Commentaire posté avec succès. Cependant le commentaire doit être approuvé par l’administrateur pour être visible');
             return $this->render('article/show.html.twig', [
                 'form' => $form->createView(),
@@ -149,6 +163,7 @@ class ArticleController extends AbstractController
      */
     public function edit(Request $request, Article $article, $id): Response
     {
+        // Get article by its ID
         $comments = $this->getDoctrine()->getRepository(Comment::class)->findBy([
             'article' => $article,
         ],['createAt' => 'desc']);
@@ -175,6 +190,7 @@ class ArticleController extends AbstractController
             
             $this->getDoctrine()->getManager()->flush();
 
+            // Alert user
             $this->addFlash('success', 'Article édité avec succès');
             return $this->redirectToRoute('article_show', [ 'id' => $id ]);
         }
