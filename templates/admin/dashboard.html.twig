@@ -51,11 +51,10 @@
                         <h6 class="mt-1">
                             Status :
                             <span class="mb-1 text-secondary">
-                                {% if article.publishAt < date() %}
-                                    <span class="badge badge-pill badge-success">Publié</span>
-                                {% endif %}
-                                {% if article.publishAt > date() %}
-                                    <span class="badge badge-pill badge-warning">Non publié</span>
+                                {% if article.isVisible and article.publishAt < date() %}
+                                    <span class="badge badge-pill badge-success">Visible</span>
+                                {% else %}
+                                    <span class="badge badge-pill badge-warning">Non visible</span>
                                 {% endif %}
                             </span>
                         </h6>

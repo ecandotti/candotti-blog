@@ -51,13 +51,12 @@
                         <th scope="row">{{ article.user.firstName }} {{ article.user.lastName }}</th>
                         <th scope="row">{{ article.publishAt|date('d/m/Y h:m:s') }}</th>
                         <td>
-                            {% if article.publishAt < date() %}
-                                <span class="badge badge-pill badge-success">Publié</span>
+                            {% if article.isVisible and article.publishAt < date() %}
+                                <span class="badge badge-pill badge-success">Visible</span>
+                            {% else %}
+                                <span class="badge badge-pill badge-warning">Non visible</span>
                             {% endif %}
-                            {% if article.publishAt > date() %}
-                                <span class="badge badge-pill badge-warning">Non publié</span>
-                            {% endif %}
-                        </td>
+                    </td>
                         <td>
                             <div class="d-flex flex-column flex-md-row">
                                 <a href="{{ path('article_edit', {'id': article.id}) }}" class="btn btn-warning mr-2 mb-2"><i class="fas fa-edit"></i></a>
