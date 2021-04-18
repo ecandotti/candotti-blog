@@ -16,14 +16,14 @@
 - symfony server:start  
 ~~~
 :warning: Don't forget to change .env value, turn on your Apache and MySQL ! :warning:  
+  
 Enjoy :call_me_hand:
   
 ## To Do :  
 - [X] Creation du projet  
 - [X] Initialisation base de données  
-- [X] Entité Article, User  
-- [X] Entité catégorie  
-- [X] Newsletter  
+- [X] Entité Article, User, Comment, Contact, Image, Like, Share, Newsletter
+- [X] Newsletter feature  
 - [X] Role, authentification  
 - [X] CRUD Article  
 - [X] Template Article  
@@ -43,7 +43,7 @@ Enjoy :call_me_hand:
 - [X] delete author variable        
 - [X] Fix like / share double      
 - [X] Ajouter une image  
-- [X] Cancel function in edit mode   
+- [X] Cancel button in edit mode   
 - [X] Filtration (visible / non visible / none)   
 - [X] Action de masse    
 - [X] CKEditor  
@@ -54,6 +54,7 @@ Enjoy :call_me_hand:
 - [X] Date de publication programmable    
 - [X] Trier (titre, date)  
 - [X] Secure publication (PublishAt give error)
+- [X] Add hidden variable in Article entity    
 - [ ] Search bar    
 - [ ] Optimisation des requêtes    
 - [ ] Trier (date) User  
