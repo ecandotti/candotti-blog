@@ -16,7 +16,7 @@ class CommentFixtures extends Fixture implements DependentFixtureInterface
             for ($j=1; $j < 5; $j++) {
                 $comment = new Comment();
                 $comment
-                    ->setUser($this->getReference('simple-user'))
+                    ->setUser($this->getReference('admin'))
                     ->setArticle($this->getReference('article'.$i))
                     ->setStatus("V")
                     ->setContent('foiqjfpozeijrozjerfj => '.$j)
