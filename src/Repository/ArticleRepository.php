@@ -19,6 +19,35 @@ class ArticleRepository extends ServiceEntityRepository
         parent::__construct($registry, Article::class);
     }
 
+    /**
+     * Search article according to the words received
+     * @return void 
+     */
+    public function searchVisible($words = null){
+        // Create query builder of article visible
+        $query = $this->createQueryBuilder('a');
+        $query->where('a.isVisible = 1');
+        if($words != null){
+            $query->andWhere('MATCH_AGAINST(a.title, a.content) AGAINST (:words boolean)>0')
+                ->setParameter('words', $words);
+        }
+        return $query->getQuery()->getResult();
+    }
+
+    /**
+     * Search article according to the words received
+     * @return void 
+     */
+    public function searchAllArticle($words = null){
+        // Create query builder of article visible
+        $query = $this->createQueryBuilder('a');
+        if($words != null){
+            $query->Where('MATCH_AGAINST(a.title, a.content) AGAINST (:words boolean)>0')
+                ->setParameter('words', $words);
+        }
+        return $query->getQuery()->getResult();
+    }
+
     // /**
     //  * @return Article[] Returns an array of Article objects
     //  */
