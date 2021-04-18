@@ -27,16 +27,19 @@ class AdminController extends AbstractController
      */
     public function adminDashboard(): Response
     {
+        // Get 5 latest article DESC
         $latest_article = $this->getDoctrine()->getRepository(Article::class)->findBy([
             'user' => $this->getUser()
         ], [
             'createAt' => 'DESC',
         ],5);
 
+        // Get Comment with Waiting status
         $comment = $this->getDoctrine()->getRepository(Comment::class)->findBy([
             'status' => 'W'
         ]);
 
+        // If comment exist, display message
         if($comment) {
             $this->addFlash('msg', 'Des commentaires sont à gérer.');
         }
@@ -51,12 +54,16 @@ class AdminController extends AbstractController
      */
     public function multiDeleteArticle(Request $request, EntityManagerInterface $em): Response
     {
+
+        // Get request contain id_article
         $result = $request->request->all();
+        // Check if var is not empty, else display message
         if (empty($result)) {
             $this->addFlash('error','Aucun article selectionné');
             return $this->redirectToRoute('admin_manage_article');
         }
 
+        // Map $result and remove article by its ID
         foreach ($result as $key => $value) {
             $article = $em->getRepository(Article::class)->findOneBy([
                 'id' => $key
@@ -64,6 +71,8 @@ class AdminController extends AbstractController
             $em->remove($article);
         }
         $em->flush();
+
+        // Display successfull message
         $this->addFlash('success','Articles selectionnés supprimés');
         return $this->redirectToRoute('admin_manage_article');
     }
@@ -73,15 +82,19 @@ class AdminController extends AbstractController
      */
     public function multiDeleteCommentary(Request $request, EntityManagerInterface $em): Response
     {
+        // Get request
         $result = $request->request->all();
+        // Get which action and remove it to had only id_comment
         $action = $result['actionMass'];
         unset($result["actionMass"]);
 
+        // Check if $result is not empty, else display message
         if (empty($result)) {
             $this->addFlash('error','Aucun commentaire selectionné');
             return $this->redirectToRoute('admin_manage_comment');
         }
 
+        // Map $result and remove article by its ID
         foreach ($result as $key => $value) {
             $comment = $em->getRepository(Comment::class)->findOneBy([
                 "article" => $key
@@ -90,6 +103,7 @@ class AdminController extends AbstractController
         }
         $em->flush();
 
+        // Display successfull message
         $this->addFlash('success','Commentaires selectionnés modifié !');
         return $this->redirectToRoute('admin_manage_comment');
     }
@@ -134,10 +148,12 @@ class AdminController extends AbstractController
      * @Route("/manage/comment", name="admin_manage_comment", methods={"GET","POST"})
      */
     public function adminManageComment(request $request, PaginatorInterface $paginator, EntityManagerInterface $em): Response
-    {   
+    {
+        // Create FilterForm
         $form = $this->createForm(FilterCommentType::class);
         $form->handleRequest($request);
 
+        // If nameFilter exist, use filterName in findBy parameter else use nothing
         if (!empty($form->get('nameFilter')->getData())) {
             $statut = $form->get('nameFilter')->getData();
             $comments = $em->getRepository(Comment::class)->findBy([
@@ -162,16 +178,21 @@ class AdminController extends AbstractController
     /**
      * @Route("/manage?status={status}&commentId={commentId}", name="comment_action")
      */
-    public function comment(Request $request, $status, $commentId)
+    public function comment($status, $commentId)
     {
+        // EntityManagerInterface
         $em = $this->getDoctrine()->getManager();
+        // Get specific comment by its ID
         $comment = $em->getRepository(Comment::class)->find($commentId);
 
+        // If doesn't exist, throw an error
         if (!$comment) {
             throw $this->createNotFoundException(
                 'No comment found for id '.$commentId
             );
         }
+
+        // Change status of comment V=Valid, R=Refuse
         if ($status == 'V') {
             $comment->setStatus('V');
             $em->flush();
