@@ -26,7 +26,7 @@
                         <th scope="row"><a href="{{ path('article_show', { id: likes.article.id }) }}">{{ likes.article.title }}</th>
                         <th scope="row">{{ likes.user.firstName }} {{ likes.user.lastName }}</th>
                         <th scope="row">{{ likes.article.category }}</th>
-                        <th scope="row">{{ likes.article.content|slice(0,10) ~ '...' }}</th>
+                        <th scope="row">{{ likes.article.content|striptags|slice(0,10) ~ '...'|raw }}</th>
                         <th scope="row">{{ likes.article.publishAt|date('d/m/Y') }}</th>
                     </tr>
                 {% endfor %}

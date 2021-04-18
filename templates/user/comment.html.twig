@@ -24,7 +24,7 @@
                     <tr>
                         <th scope="row"><a href="{{ path('article_show', { id: comment.article.id }) }}">{{ comment.article.title }}</th>
                         <th scope="row">{{ comment.article.category }}</th>
-                        <th scope="row">{{ comment.article.content|slice(0,10) ~ '...' }}</th>
+                        <th scope="row">{{ comment.article.content|striptags|slice(0,10) ~ '...'|raw }}</th>
                         <th scope="row">{{ comment.content|slice(0,10) ~ '...' }}</th>
                         <th scope="row">{{ comment.createAt|date('d/m/Y') }}</th>
                     </tr>
