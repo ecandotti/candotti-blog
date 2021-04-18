@@ -19,6 +19,7 @@ class UserFixtures extends Fixture
 
     public function load(ObjectManager $manager)
     {
+        // Create user account
         $user = new User();
         $user
             ->setFirstName('Barry')
@@ -32,6 +33,7 @@ class UserFixtures extends Fixture
         $manager->persist($user);
         $this->addReference('simple-user', $user);
 
+        // Create admin account
         $admin = new User();
         $admin
             ->setFirstName('Suprem')
