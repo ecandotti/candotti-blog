@@ -84,6 +84,10 @@ class ArticleController extends AbstractController
      */
     public function show(Article $article, Request $request)
     {
+        if (!$article->getIsVisible()) {
+            $this->addFlash('error', 'Une erreur est survenu :)');
+            return $this->redirectToRoute('home');
+        }
         // Get all validate comments of article selected in DESC
         $comments = $this->getDoctrine()->getRepository(Comment::class)->findBy([
             'article' => $article,
