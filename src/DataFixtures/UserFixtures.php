@@ -31,6 +31,7 @@ class UserFixtures extends Fixture
         ;
         
         $manager->persist($user);
+        $this->addReference('user', $user);
 
         // Create admin account
         $admin = new User();
@@ -44,7 +45,7 @@ class UserFixtures extends Fixture
         ;
         
         $manager->persist($admin);
-        $this->addReference('admin', $user);
+        $this->addReference('admin', $admin);
 
         $manager->flush();
     }
