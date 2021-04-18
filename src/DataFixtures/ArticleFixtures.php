@@ -22,7 +22,7 @@ class ArticleFixtures extends Fixture implements DependentFixtureInterface
                 ->setSubtitle('Hi \'m the subtitle')
                 ->setCreateAt(new DateTime())
                 ->setPublishAt(new DateTime())
-                ->setReadTime(4)
+                ->setReadTime(2)
                 ->setContent('<p>Le Monde et ses partenaires peuvent, indépendamment ou conjointement, déposer lors de votre visite sur ce site des cookies et technologies similaires, afin de collecter des informations, y compris des données personnelles, 
                     telles que : adresse IP, identifiants uniques, données de navigation, données de géolocalisation.
                     Ces données sont traitées par Le Monde et/ou ses partenaires aux fins suivantes : analyse et amélioration de l’expérience utilisateur et de l’offre de contenus, 
