@@ -38,9 +38,12 @@
             </div>
         {% endfor %}
         <h1 class="text-center mb-4">Accueil</h1>
-        {% if app.user %}
-            {# <a href="{{ path('article_new') }}" class="btn btn-success my-2">Créer un article</a> #}
-        {% endif %}
+        <div class="d-flex justify-content-center my-4">
+            <form class="form-inline my-2 my-lg-0" action="{{ path('search') }}" method="GET">
+                <input class="form-control mr-sm-2" type="text" placeholder="Rechercher un titre ou contenu" name="search" required>
+                <button class="btn btn-secondary my-2 my-sm-0" type="submit">Go!</button>
+            </form>
+        </div>
             {% for article in articles %}
                 <div class="card mb-3">
                     <div class="card-body">
