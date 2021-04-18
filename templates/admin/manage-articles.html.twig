@@ -43,7 +43,11 @@
                 {% for article in articles %}
                     <tr>
                         <th scope="row"><input type="checkbox" name="{{ article.id }}" value="article_id"></th>
-                        <th scope="row">{{ article.title }}</th>
+                        <th scope="row">
+                            <a href="{{ path('article_show', {id: article.id}) }}" class="text-decoration-none text-body">
+                                {{ article.title }}
+                            </a>
+                        </th>
                         <th scope="row">{{ article.user.firstName }} {{ article.user.lastName }}</th>
                         <th scope="row">{{ article.publishAt|date('d/m/Y h:m:s') }}</th>
                         <td>
