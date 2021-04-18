@@ -3,7 +3,7 @@
 </h1>
 
 # :earth_africa: Candotti Blog  
-*<div style="text-align:center">Blog created in Symfony 4.4 as part of a Dev Back-End evaluation at Ynov Campus</div>*  
+*Blog created in Symfony 4.4 as part of a Dev Back-End evaluation at Ynov Campus*  
   
 - Symfony 4.4  
 - Bootstrap 4
@@ -12,10 +12,24 @@
 ## How to clone/use the project
 ~~~bash
 - git clone https://github.com/ecandotti/candotti-blog.git (Go inside the folder)
-- composer requirement  
-- symfony server:start  
 ~~~
 :warning: Don't forget to change .env value, turn on your Apache and MySQL ! :warning:  
+~~~bash
+- composer requirement  
+- php bin/console doctrine:database:create  
+- php bin/console make:migration  
+- php bin/console doctrine:migrations:migrate 
+- php bin/console doctrine:fixtures:load 
+- symfony server:start  
+~~~
+  
+### ID and Password (User)  
+ID : user@candotti-blog.fr  
+Password : password  
+  
+### ID and Password (Admin)  
+ID : admin@candotti-blog.fr  
+Password : password  
   
 Enjoy :call_me_hand:
   
