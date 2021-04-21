@@ -11,16 +11,17 @@
 
 ## How to clone/use the project
 ~~~bash
-- git clone https://github.com/ecandotti/candotti-blog.git (Go inside the folder)
+git clone https://github.com/ecandotti/candotti-blog.git
+cd candotti-blog
 ~~~
 :warning: Don't forget to change .env value, turn on your Apache and MySQL ! :warning:  
 ~~~bash
-- composer install  
-- php bin/console doctrine:database:create  
-- php bin/console make:migration  
-- php bin/console doctrine:migrations:migrate 
-- php bin/console doctrine:fixtures:load 
-- symfony server:start  
+composer install  
+php bin/console doctrine:database:create  
+php bin/console make:migration  
+php bin/console doctrine:migrations:migrate 
+php bin/console doctrine:fixtures:load 
+symfony server:start  
 ~~~
   
 ### ID and Password (User)  
@@ -70,6 +71,6 @@ Enjoy :call_me_hand:
 - [X] Secure publication (PublishAt give error)
 - [X] Add hidden variable in Article entity    
 - [X] Search bar    
-- [_] Optimisation des requêtes  
+- [ ] Optimisation des requêtes  
 - [ ] Consent Cookie    
 
